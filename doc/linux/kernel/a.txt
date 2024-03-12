@@ -1,0 +1,442 @@
+Темы:
+* Сборка ядра
+* scripts/kconfig/conf
+* Отладка conf
+* Ошибки conf
+* Kconfig
+* Черный экран на этапе инициализации (initramfs)
+* Поймать ошибки initrd (vbox)
+* Откуда берется /root и немного про initrd
+* generic & hardened
+* Параметры ядра
+* vmlinuz
+* System.map
+* Kernel panic
+* Oops (ошибка)
+* Call Trace
+* sysrq + debug
+* Отладка ядра
+
+Документация: linux/Documentation
+
+
+--- Сборка ядра
+Сборка ядра под свое железо могла внести весомый вклад в увеличение производительности.
+Теперь это уже не столь важно и в большинстве случаев не нужно, ибо прирост будет
+совсем незначительным. Современные компьютеры довольно мощные и имеют много памяти.
+
+Ядро можно собрать двумя способами, первый, это использовать предварительно скомпилированное ядро,
+второй, сборочная система сама создаст .config основываясь на текущих конфигурациях (сборочных)
+
+Перед сборкой нужно поставить пакеты:
+$ apt-get install build-essential rsync gcc bc bison flex libssl-dev libncurses5-dev libelf-dev
+
+Можно пересобрать ядро с нуля (это долго и сложно)
+$ make config
+$ make config --just-print                      # выводит содержимое make файла, но не выполняет его
+
+Далее нужно выбрать способ "сборки ядра":
+$ make config                                   # вопрос / ответ
+$ make menuconfig                               # ручная конфигурация через TUI
+
+config -> conf -> .config
+menuconfig -> mconf -> .config
+
+А можно скопировать готовый файл конфигурации из
+существующего '/boot/config-*' это конфигурационный файл ядра
+$ cd linux-5.10/ && cp /boot/config-* .config
+
+При вопросах можно заметить [Y/n/m/?] (NEW)
+Это новая опция (она может быть нестабильна), а вот старым стоит уделить внимание
+(m) это module, рекомендуемый ответ написан с большой буквы
+Встроенные модули отмечаются как: CONFIG_SCSI=y, а загружаемые CONFIG_SCSI=m
+
+После созданного linux-5.10/.config надо:
+$ nproc                                         # показывает кол-во ядер (можно передать -j<n>)
+$ make listnewconfig                            # для просмотра новых опций
+$ make                                          # запуск сборки
+$ make clean                                    # так же можно использовать и тут
+$ make kernelversion                            # версия ядра сборки
+
+В процессе сборки занимает важную роль система конфигурирования Kconfig / kbuild
+Kconfig предоставляет пользователям множество целей такие как: oldconfig, defconfig и подобные.
+Эти цели (и другие) обрабатываются основными программами (которые представляются ядром)
+и собираются во время сборки ядра. Инструменты и исходный код, связанные с Kconfig
+находятся в scripts/kconfig/ и scripts/kconfig/Makefile
+
+Можно увидеть <file>.y файлы, это тоже исходные файлы
+они не компилируются, а превращаются в С код с помощью Bison / Flex
+
+
+--- scripts/kconfig/conf
+The first step reads the Kconfig file under source root to construct an initial configuration database;
+then it updates the initial database by reading an existing configuration file
+
+$ fakeroot dpkg-buildpackage -b -uc
+
+-> fakeroot debian/rules clean
+Создаются файлы debian окружения (без них сборка не сможет запуститься)
+
+-> fakeroot debian/rules build
+Создает debian/build/build-$(flavour) сборка ядра происходит в этом build окружении
+Запускает все debian/rules.d/*
+
+Список flavours можно посмотреть в debian.master/rules.d/amd64.mk
+
+Можно заметить, что в одном из rules.d/ идет:
+make O=/home/user/git/aaaaa/linux/debian/build/build-generic syncconfig prepare scripts
+
+Вызывается scripts/kconfig/Makefile
+Здесь лежат основные программы, например conf.c / confdata.c
+они собираются, затем можно увидеть, что conf вызывается так:
+
+scripts/kconfig/conf --syncconfig Kconfig
+syncconfig меняет .config файл
+
+
+--- Отладка conf
+В главное Makefile добавить отладочные символы в KBUILD_USERCFLAGS
+
+$ fakeroot debian/rules clean
+$ fakeroot debian/rules build
+Во время нажать CTRL + C
+
+$ cd debian/build/build-generic/
+$ srctree=/home/user/git/aaaaa/linux CC=gcc LD=ld SRCARCH=x86 scripts/kconfig/conf --listnewconfig Kconfig
+
+В main.gdb
+set env srctree=/home/user/git/aaaaa/linux
+set env CC=gcc
+set env LD=ld
+set env SRCARCH=x86
+
+$ gdb scripts/kconfig/conf --command main.gdb
+
+
+--- Ошибки conf
+/boot/config-5.10.0-13-amd64:3591:warning: symbol value 'm' invalid for CHELSIO_IPSEC_INLINE
+Несоответствие типов, в дефолтном файле описано значение 'm', хотя в нашем текущем Kconfig
+описано bool (y/n), для того чтобы исправить ошибку, нужно прописать tristate (y/n/m)
+
+override: reassigning to symbol DEBUG_VIRTUAL
+означает, что указан несколько раз DEBUG_VIRTUAL
+
+override: M686 changes choice state
+принудительно переопределяет состояние выбора для M686
+Depends on: <choice>
+
+
+--- Kconfig
+Menu entries, пример:
+config MODVERSIONS
+      bool "Set version information on all module symbols"
+      depends on MODULES
+      help
+        Usually, modules have to be recompiled whenever you switch to a new
+        kernel.  ...
+
+Ошибка - security/Kconfig:256:warning: prompt redefined
+choice
+	prompt "First legacy 'major LSM' to be initialized"
+	prompt "Default security module"
+
+prompt не должен указываться несколько раз, нужно убрать второй
+
+Каждый config option должен иметь тип (type) - bool/tristate/string ...
+* string to save string data (форма в которую нужно ввести данные)
+* bool to save the bool value (y/n or commented string in config)
+* tristate (y/n/m/commented)
+
+Значения по умолчанию.
+Может быть несколько default записей, самая первая - работает (в приоритете)
+Если видно default y значит в меню будет Y/n? (автоматически включена)
+
+В данном случае в TUI интерфейсе будет стоять галочка на "show data only for current user"
+config SHOW_ONLY_CURRENT_USER
+    bool "show data only for current user"
+    default y
+    help
+      script will get data only for currewnt user
+
+Для драйверов значение по-умолчанию ставится 'default n'
+Значение по умолчанию назначается только в том случае, если пользователь не установил
+другое значение (через приглашение к вводу)
+
+Не понимаю эту мысль, в ней заложена какая-то тайна ...
+Every entry has its own dependencies.
+These dependencies are used to determine the visibility of an entry.
+Any child entry is only visible if its parent entry is also visible.
+
+select нужно использовать с осторожностью. он принудительно задает значение опции
+без обращения к зависимостям (это относится к reverse dependencies)
+
+prompt "string" работает меню с ---> переходом и внутри предлагаются различные варианты
+например варианты bool "string", это просто галочка (y/n) включаешь, выключаешь
+я не вижу разницы между bool "string" и prompt "string"
+
+config / menuconfig / choice/endchoice / commend / menu/endmenu и другие
+это касается TUI интерфейса и как будут разворачиваться элементы
+
+Как работает depends on, есть два конфига: SELECT_DESTINATION_TTY / SELECT_DESTINATION_FILE
+если пользователь выбрал SELECT_DESTINATION_FILE у него появляется зависимость, которую нужно
+удовлетворить, эта зависимость-конфиг SELECT_DESTINATION_FILE_FILENAME там значение по-умолчанию
+стоит "last.log" (поэтому удовлетворять особо нечего), но можно и вписать свое
+эта зависимость-конфиг является NEW конфигом для .config. Говоря проще, чтобы эта опция
+была настроена, ее зависимости должны быть удовлетворены.
+
+choice SELECT_DESTINATION
+    prompt "Select data destination"
+    default DESTINATION_TTY
+config SELECT_DESTINATION_TTY
+    bool "show data in console"
+config SELECT_DESTINATION_FILE
+    bool "save data to file"
+endchoice
+
+config SELECT_DESTINATION_FILE_FILENAME
+    string "destination file"
+    depends on SELECT_DESTINATION_FILE
+    default "last.log"
+    help
+      Write destination file with relative or full path
+
+Еще один пример:
+config MODULES
+    bool "Enable loadable module support"
+
+config MODVERSIONS
+    bool "Set version information on all module symbols"
+    depends on MODULES
+
+MODVERSIONS виден только в том случае, если MODULES отличается от =n
+
+
+--- Черный экран на этапе инициализации (initramfs)
+Запустить машину, на этапе выбора ядра можно нажать 'e' для редактирования команд grub
+эти штуки берутся из /boot/grub/grub.cfg либо 'c' для минимального Bash
+Пользователь с паролем 12345678
+
+Если попасть в меню ядра и прописать в kernel line (в конец) break=bottom
+можно зайти в rescue shell (initramfs shell), можно же прописать это в /boot/grub/grub.cfg
+откроется оболочка /bin/busybox которая включает в себя все необходимые утилиты (в урезанном виде)
+$ /bin/busybox grep
+
+initramfs - начальная ФС в оперативной памяти, основанная на tmpfs
+(легковесная ФС в памяти с изменяемым размеров) эта ФС решает накладные проблемы initrd
+и была создана специально для этого. Так же как и initrd, она содержит утилиты и скрипты,
+требуемые для монтирования ФС перед вызовом init. В современных системах initramfs заменяет initrd,
+предоставляя более гибкий и надежный механизм для загрузки системы.
+
+Когда Linux обнаружит, что ему нужна initramfs, создаст tmpfs, извлечет из архива всё необходимое
+и запустит init-скрипт. Этот скрипт затем примонтирует действительную корневую ФС (после того,
+как убедится, что он может ее примонтировать, например мы загрузили доп.модули и что-то починили)
+
+Когда находимся в debug shell, можно смотреть диски, lsmod, dmesg и анализировать, то что не загрузилось.
+Посмотреть /proc/cmdline или /proc/modules, прочитать /var/log/boot.log (информация загрузки системы) и другие.
+
+Например, видим ошибку 'parsec module missing' при запуске нового ядра. Запускаем initramfs
+$ mount --bind /dev /root/dev          # может понадобится диск (блочные и псевдоустройства null и другие)
+$ mount --bind /dev/pts /root/dev/pts  # псевдотерминал, чтобы был терминал (работала команда tty) /dev/pts/0
+                                       # echo "hello" > /dev/pts/0 отправили строку hello на устройство терминала 0
+$ mount --bind /proc /root/proc        # эта ФС может понадобится для вывода программ типа mount и других
+                                       # ибо разные утилиты берут информацию именно из /proc
+$ mount --bind /sys /root/sys          # предоставляет информацию / конфигурацию устройств и ядра, тоже может понадобится
+                                       # например яркость на ноутбуке /sys/class/backlight/acpi_video0/brightness
+                                       # MAC адрес /sys/class/net/enp1s0/address и другое
+$ chroot /root                         # в этом окружении можно анализировать и смотреть, что в системе
+                                       # dpkg -l | grep astra-modules # бац! их нет, ошибка в этом!
+                                       # можно увидеть, что parsecfs непримонтирован (это как proc, только с parsec)
+                                       # можно еще посмотреть modinfo /lib/modules/5.10.0-1057-hardened/misc/parsec.ko
+                                       # его тоже нет, значит проблема в незагруженных модулях парсека
+
+rootfs примонтирован как ro, если необходимо отредактировать системные файлы,
+нужно отмонтировать rootfs и примонтировать в новое место с rw
+
+
+--- Поймать ошибки initrd (vbox)
+При работе с виртуальной машиной можно настроить COM-порт (перенаправлен в файл), указать /tmp/fff
+Затем в grub прописать break=bottom console=ttyS0 console=tty0 и читать /tmp/fff
+
+
+--- Откуда берется /root и немного про initrd
+Можно заметить, что root это /dev/sda<N>
+/dev/sda3 on / type ext4 (rw,relatime,errors=remount-ro)
+Это основная файловая система.
+
+В initrd присутствует небольшая временная файловая система (rootfs).
+Она используется для предварительной подготовки системы перед монтированием настоящей
+корневой файловой системы (root).
+
+initrd подготавливает реальный root. И делает туда chroot.
+
+Пример простого initrd/init (из rootfs) сценария:
+$ mkdir /newroot
+$ mount /dev/sda<N> /newroot
+$ mount --move /sys /newroot
+$ mount --move /dev /newroot
+$ mount --move /proc /newroot
+
+$ switch_root /newroot /bin/bash
+
+initrd используется временно в начале процесса загрузки,
+а root (/) является постоянной файловой системой, используемой после завершения загрузки.
+
+
+--- generic & hardened
+generic ядро общего назначения (обычное, пользовательское)
+hardened ядро отключает многочисленные опции в ядре, пытаясь свести к минимуму открытую
+поверхность атаки.
+
+
+--- Параметры ядра
+Посмотреть текущие параметры ядра можно через /proc/cmdline
+Параметры ядра можно установить либо временно, отредактировав загрузочную запись
+в меню загрузчика (e), либо навсегда, через /etc/default/grub (конфигурация загрузчика),
+но после редактирования нужно сделать $ update-grub
+
+Параметры зависят от включенных возможностях ядра, например, если включен CONFIG_SLUB_DEBUG_ON
+можно использовать параметр slub_debug=xxx
+
+quiet - эта опция сообщает ядру, что НЕ нужно выводить какие-либо подробные данные ядра,
+если загрузиться без этой опции, можно заметить информацию об активации модулей, драйверов, ФС,
+это обычно полезно, если хотим найти какую-то ошибку
+
+splash - процесс инициализации ядра обычно виден (без этой опции) как загружаются сервисы
+и подобное, если мы хотим показывать "красивый" экран загрузки, можно прописать эту опцию
+
+init - запустить исполняемый файл, вместо /sbin/init в качестве процесса init
+
+initrd - путь к образу начальной ФС (initramfs)
+
+debug - включить отладку ядра (уровень журнала событий)
+
+ro - при загрузке монтировать корневую ФС только в режиме чтения
+
+rw - чтение/запись корневая ФС
+
+net.ifnames - традиционные имена сетевых интерфейсов net.ifnames=0 отключить
+
+pti=on - изоляция памяти ядра и пользовательского пространства, снижает уязвимость системы,
+улучшает защиту ядра
+
+Покажет доступные значения:
+$ sysctl -a
+
+sysctl используется для управления параметрами ядра в реальном времени,
+в то время как /proc/cmdline отображает параметры, с которыми ядро было запущено.
+
+
+--- vmlinuz
+Это сжатый архив, в нём хранится ядро Linux (vm - virtual memory, z - zipped)
+Ядро имеет возможность работы с виртуальной памятью, поэтому присутствует vm.
+vmlinuz это сжатый файл реального исполняемого файла vmlinuz.
+Данный файл нельзя распаковать с помощью gunzip/tar
+
+
+--- System.map
+System.map обычно генерируется во время компиляции ядра.
+Файл, внутри которого находится символьная таблица адресов функций и процедур, используемых
+ядром Linux. Перечислены имена переменных и функций и их адреса в памяти компьютера.
+
+Для загруженного ядра можно посмотреть /proc/kallsyms это тоже самое (развернутая версия.
+Содержит все символы (функции, переменные), о которых знает ядро и которые
+(часть) доступны для модулей.
+
+
+--- Kernel panic
+Не может найти и смонтировать корневую систему, но часто просто отказ аппаратной части,
+оперативной памяти, процессор и т.д или не смог запустить init или драйвера или segfault
+Kernel panic чаще всего возникает, когда система пытается использовать несуществующие ресурсы.
+
+
+--- Oops (ошибка)
+Функция ядра, вызываемая при отклонении от нормальной работы Linux
+При oops'e ядро создает запись в логе с описанием ошибки. Нередко за вызовом oops
+следует вызов kernel panic с последующей остановкой или перезапуском системы.
+
+
+--- Call Trace
+"Backtrace", "stack trace", "stack backtrace", etc. are names for the same thing
+
+Call Trace это отчет, который предоставляет стек вызовов функций в момент когда
+происходит ошибка или паника ядра в операционной системе Linux.
+Он показывает последовательность вызовов функций в ядре, которые привели к ошибке,
+что помогает разработчикам и системным администраторам определить причину проблемы
+и устранить ее. Call Trace обычно содержит адреса памяти, имена функций и другую
+информацию, полезную для диагностики.
+
+Например, при добавлении модуля возникла ошибка
+$ insmod ./virt_battery.ko
+$ dmesg -HTx
+
+kern  :warn  : [Чт июл 28 12:04:31 2022] sysfs: cannot create duplicate filename '/class/power_supply/AC'
+kern  :warn  : [Чт июл 28 12:04:31 2022] CPU: 0 PID: 2137 Comm: insmod Tainted: G           OE     5.10.0-1057-generic #astra6+ci78
+kern  :warn  : [Чт июл 28 12:04:31 2022] Hardware name: innotek GmbH VirtualBox/VirtualBox, BIOS VirtualBox 12/01/2006
+kern  :warn  : [Чт июл 28 12:04:31 2022] Call Trace:
+kern  :warn  : [Чт июл 28 12:04:31 2022]  dump_stack+0x74/0x92
+kern  :warn  : [Чт июл 28 12:04:31 2022]  sysfs_warn_dup.cold.5+0x17/0x26
+kern  :warn  : [Чт июл 28 12:04:31 2022]  sysfs_do_create_link_sd.isra.2+0xa8/0xc0
+kern  :warn  : [Чт июл 28 12:04:31 2022]  sysfs_create_link+0x25/0x40
+kern  :warn  : [Чт июл 28 12:04:31 2022]  device_add+0x31f/0x830
+kern  :warn  : [Чт июл 28 12:04:31 2022]  __power_supply_register+0x256/0x440
+kern  :warn  : [Чт июл 28 12:04:31 2022]  power_supply_register+0x13/0x20
+kern  :warn  : [Чт июл 28 12:04:31 2022]  virt_battery_init+0x55/0x1000 [virt_battery]
+kern  :warn  : [Чт июл 28 12:04:31 2022]  ? 0xffffffffc071a000
+kern  :warn  : [Чт июл 28 12:04:31 2022]  do_one_initcall+0x4a/0x1e0
+kern  :warn  : [Чт июл 28 12:04:31 2022]  ? _cond_resched+0x19/0x30
+kern  :warn  : [Чт июл 28 12:04:31 2022]  ? kmem_cache_alloc_trace+0x31d/0x430
+kern  :warn  : [Чт июл 28 12:04:31 2022]  ? do_init_module+0x27/0x240
+kern  :warn  : [Чт июл 28 12:04:31 2022]  do_init_module+0x60/0x240
+kern  :warn  : [Чт июл 28 12:04:31 2022]  load_module+0x1b9b/0x1cf0
+kern  :warn  : [Чт июл 28 12:04:31 2022]  __do_sys_finit_module+0xd5/0x150
+kern  :warn  : [Чт июл 28 12:04:31 2022]  ? __do_sys_finit_module+0xd5/0x150
+kern  :warn  : [Чт июл 28 12:04:31 2022]  __x64_sys_finit_module+0x1a/0x20
+kern  :warn  : [Чт июл 28 12:04:31 2022]  do_syscall_64+0x37/0x80
+kern  :warn  : [Чт июл 28 12:04:31 2022]  entry_SYSCALL_64_after_hwframe+0x44/0xa9
+kern  :warn  : [Чт июл 28 12:04:31 2022] RIP: 0033:0x7e81e77729e9
+kern  :warn  : [Чт июл 28 12:04:31 2022] Code: 00 c3 66 2e 0f 1f 84 00 00 00 00 00 0f 1f ...
+kern  :warn  : [Чт июл 28 12:04:31 2022] RSP: 002b:00007fff84e71128 EFLAGS: 00000246 ORIG_RAX: 0000000000000139
+kern  :warn  : [Чт июл 28 12:04:31 2022] RAX: ffffffffffffffda RBX: 00000000013fe7b0 RCX: 00007e81e77729e9
+kern  :warn  : [Чт июл 28 12:04:31 2022] RDX: 0000000000000000 RSI: 000000000041f090 RDI: 0000000000000003
+kern  :warn  : [Чт июл 28 12:04:31 2022] RBP: 000000000041f090 R08: 0000000000000000 R09: 00007e81e783c000
+kern  :warn  : [Чт июл 28 12:04:31 2022] R10: 0000000000000003 R11: 0000000000000246 R12: 0000000000000000
+kern  :warn  : [Чт июл 28 12:04:31 2022] R13: 0000000001401910 R14: 0000000000000000 R15: 0000000000000000
+kern  :err   : [Чт июл 28 12:04:31 2022] Unable to register power supply 1 in virt_battery
+
+Журнал говорит, что устройство 'class/power_supply/AC' уже используется каким-то другим драйвером
+И выдает нам Call Trace (когда что-то пошло не так) показывает кадры стека, регистры.
+
+Можно просмотреть:
+$ cat /proc/self/stack
+
+This file is provided only if the kernel was built with the CONFIG_STACKTRACE configuration option
+
+Shows stack backtrace for all active CPUs
+$ echo l > /proc/sysrq-trigger
+
+
+--- sysrq + debug
+SrsRq - сочетания клавиш, соответствуют клавишам ALT + PRINTSCREEN + (что-то)
+Предназначены они главным образом для отладочных целей, начинаются с CONFIG_MAGIC_SYSRQ_*
+Включение:
+$ echo 1 > /proc/sys/kernel/sysrq  # enable
+$ echo 0 > /proc/sys/kernel/sysrq  # disable
+$ sysctl kernel.sysrq=1            # навсегда
+
+SysRq+L стектрейсы всех CPU
+SysRq+P значения всех регистров
+SysRq+B перезагрузка
+SysRq+O выключить питание
+SysRq+C уронить ядро
+
+Тоже самое можно делать через $
+$ echo l > /proc/sysrq-trigger
+
+
+--- Отладка ядра
+Толку в отладке vmlinux мало, потому что везде видны optimized out данные,
+а ядро невозможно скомпилировать с -O0 оптимизацией, поэтому это полезно
+для чтения каких-то определенных статичных данных.
+
+Позиция Торвалдса: не стоит пошагово отлаживать ядро, только трассировки и профайлинг
+Conclusion: debugging the kernel via debugger that is running on that same machine is impossible.

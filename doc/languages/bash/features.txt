@@ -1,0 +1,448 @@
+word="hello"
+echo "${#word}" # 5
+
+
+for i in $(seq 4); do
+  echo "$i" # 1 2 3
+done
+
+
+cat << EOF
+First line
+Second line
+$(ls -al)
+EOF
+
+
+cat <<\EOF > file
+#!/bin/bash
+printf "${green}$ver \n$up \n$mod_name \n${coff}"
+EOF
+
+Можно еще направить в stderr
+cat << EOF >&2
+not good my friend
+EOF
+
+
+value="World"
+echo "Hello ${value}"
+
+
+Переменная REPLY хранит значение ввода (read)
+if [ "$REPLY" == "input" ]; then
+  echo "good"
+fi
+
+
+Поиск файлов по сегодняшним изменениям
+date=$(date +"%b %e") # today
+value=$(find ~ -maxdepth 2 -type f -ls | grep "$date")
+echo "$value" # вывод измененных/новых файлов - сегодня
+
+
+Вывод размера файлов и сортировка по размеру
+echo $(du -sh /* 2>/dev/null | sort -h)
+
+
+Убрать символ
+value="hello.world"
+echo "${value/.}" # helloworld
+
+
+hostname -i       # внутренний
+hostname -I       # локальный
+curl ifconfig.me  # внешний
+
+
+string="192.168.50.120"
+Удаление всех символов после последней точки
+cut=$(echo "$string" | cut -f1-3 -d ".")
+
+
+words="My world is"
+echo "$words" | wc -w
+
+
+Создание функции
+function func {
+  pass
+}
+
+func () {
+  pass
+}
+
+
+Глобальные и локальные переменные
+text="hah"
+function func
+{
+  local value
+  value="hello"
+
+  echo "$value" # success
+}
+
+echo "$value" # not success
+echo "$text"  # success
+
+
+Константа - неизменяемое значение
+readonly title="New Title"
+
+
+Самовызываемая функция
+function func {
+  echo "maybe"
+} && func
+
+
+Срезы - вырезы
+word="hello"
+echo "${word::-1}" # hell
+echo "${word:1}" # ello
+
+
+Конструкция case, замена веткам if-elif-else
+read -p "Input -> " value
+
+case "$value" in
+  [a-z] )
+    echo "a-z"
+  ;;
+
+  [A-Z] )
+    echo "A-Z"
+  ;;
+
+  * )
+    echo "All"
+  ;;
+esac
+
+
+Конструкция case с ИЛИ
+case $1 in
+  "--address" | "-a") echo "--address" ;;
+  "--help" | "-h") echo "--help" ;;
+esac
+
+
+Многострочные комментарии в bash
+: '
+Много строк комментариев
+'
+
+
+Переменная - кавычки (разница)
+string="All *.txt files"
+echo $string    # All file.txt abc.txt files
+echo "$string"  # All *.txt files
+
+
+Использование операторов в строке read
+read -p $'\nHello\n\t' INPUT
+
+
+Если нужен определенный числовой диапозон 1-60
+if (( "$number" >= 1 && "$number" <= 60 )); then
+  echo "Good range"
+fi
+
+
+Как интерпретировать имя переменной в строке буквально
+value="hello"
+echo "this good variable - \$${!value@}"
+
+
+# Если нужно создать пользователя БЕЗ ввода пароля
+# домашний каталог - оболочка
+useradd -m user -s /bin/bash
+# или просто useradd user
+# он будет ругаться на короткий пароль, поэтому stderr
+echo "user:1" | chpasswd 2>/dev/null
+
+if test ! $(id -u $1 2>/dev/null); then
+  useradd -m $1 -s /bin/bash; echo "$1:1" | chpasswd 2>/dev/null
+  [ $? == 0 ] && echo -e "\e[92m$1 - successful creation\e[0m"
+else
+  echo -e "\e[91m$1 - user exist\e[0m"
+fi
+
+
+Проверка на существование пользователя, если нет, то создать
+if [ ! $(id -u user) ]; then echo good; fi
+
+
+# Если надо убить процесс по имени
+kill -TERM $(pidof name_of_proc)
+# Или так
+kill -TERM $(ps -C name_of_proc)
+# Или убить все фоновые процессы
+kill -TERM $(jobs -p)
+
+
+# Если нужен процесс, который просто спит от другого пользователя
+sudo -u user sleep 10&     # 10 секунд существует
+pid=$(ps -C sleep -o pid=) # узнать pid процесса и записать в переменную
+# Или можно использовать yes
+yes > /dev/null&
+
+
+# Если нужно подключиться по ssh без ввода пароля
+sshpass -p <password> ssh name@ip
+# Если нужно выполнить локальный скрипт на удаленной машине
+ssh name@ip bash -s < my_scr.sh
+# Или одиночная команда
+ssh name@ip 'systemctl poweroff -i'
+
+ssh root@10.0.0.21 bash -s << EOF
+touch file
+echo hello
+chmod 777 file
+echo super
+EOF
+
+ssh root@10.0.0.21 bash -s < /path/to/script.sh
+
+
+Если надо передать файл на сервер - перезаписать
+sshpass -p 1 sftp name@ip << EOF
+put multiple/sources.list /etc/apt/sources.list
+bye
+EOF
+
+
+Убрать кавычки
+without_quotes=$(echo $var | tr -d '"')
+
+
+release=$(lsb_release -d | cut -d' ' -f 2-) # название дистрибутива
+test "$(echo "$release" | grep "Astra")" || exit 1 # проверка на наличие Astra
+# без echo проверка бы не получилась и не стоит забывать про test "$(commands)"
+
+
+if test "$1" == "write"; then
+  # code here ...
+fi
+
+if test "$(cat ~/.fly/keyshortcutrc | grep "Alt|BackSpace")"; then
+  # code here ...
+fi
+
+if test ! -z "$value"; then
+  # code here ...
+fi
+
+if test ! "$(cat /etc/crontab | grep network)"; then
+  # code here ...
+fi
+
+
+Если функция возвращает какое-либо значение и надо сделать проверку.
+check_update_new_kernel()
+{
+  if test $up == update_5 || test $up == update_6; then
+    return 0
+  else
+    return 1
+  fi
+}
+
+if check_update_new_kernel; then
+  echo good
+fi
+
+Или так
+check_update_new_kernel && echo hello
+
+
+ssh-keygen -R $ip # удалить информацию о хосте из known_hosts
+ssh-keyscan $ip >> ~/.ssh/known_hosts # добавить информацию о хосте
+
+
+exclamation mark с массивами.
+если есть два массива с одинаковым размером, то можно
+a=(a b c) b=(c b a)
+for i in ${!a[*]}; do
+  echo ${a[i]} ${b[i]}
+done
+
+
+Если нужно перебрать список и не выходить из цикла при совпадении.
+list=(a b c)
+for i in ${list[*]}; do
+  err_counter=0
+  if $value == $i; then
+    echo not good $i # делаем вывод записей всего списка
+    err_counter=$((err_counter + 1))
+  fi
+done
+
+А затем сделать проверку и выйти.
+if (( $err_counter > 0 )); then
+  exit 1
+fi
+
+
+Как передать готовый список функции и чтобы она его перебрала.
+values=(a b c)
+
+abc() {
+  list=$1
+  for l in ${list[*]}; do echo "$l"; done
+}
+
+abc "${values[*]}" # здесь важно передавать через * и кавычки
+
+
+Команда wait ждет потомков, небольшой пример fork / wait аналог.
+sleep 20 &
+wait $! # Ждет потомков
+
+
+Если надо подождать чужой процесс.
+tail --pid=$pid -f /dev/null
+
+
+Перебор списка, вывод содержимого.
+list=("Hello" "More" "Text")
+for ((i = 0; i < ${#list[*]}; i++)); do
+	echo $i
+done
+
+for ((i = 0; i < 10; i++)); do
+  ...
+done
+
+
+Проверить откуда вызывается скрипт.
+Скрипт вызывается как самостоятельная программа или импортируется кем-то.
+if [ $BASH_SOURCE == $0 ]; then
+  ...
+fi
+
+
+Пример shift, проверка $1 аргумента
+if [ ! -z "$*" ]; then
+        while [ "$*" ]; do
+                case "$1" in
+                        "--ftp") echo ftp ;;
+                        "--hosts") echo hosts ;;
+                        "--sysctl") echo sysctl ;;
+                        "-h" | "--help") echo usage ;;
+                esac
+                shift
+        done
+fi
+
+Без shift
+for arg in "$@"; do
+        case "$arg" in
+                "--ftp") echo ftp ;;
+                "--hosts") echo hosts ;;
+                "--sysctl") echo sysctl ;;
+                "-h" | "--help") echo usage ;;
+        esac
+done
+
+
+Хороший пример, как работает "видимость".
+В выводе будет: In func2, var = func1 local
+Если же убрать определение local var, тогда в выводе будет:
+In func2, var = global
+
+func1()
+{
+    local var='func1 local'
+    func2
+}
+
+func2()
+{
+    echo "In func2, var = $var"
+}
+
+var=global
+func1
+
+
+Интересный пример вывода строк в stderr
+stderr()
+{
+	local i
+	for i do
+		echo >&2 "wow: $i"
+	done
+}
+
+stderr "hello" "more"
+
+
+Послать EOF команде read
+$ read              # ждет ввода
+$ echo exit | read  # выход
+
+
+Получить pid родителя
+echo $PPID
+
+
+Если кол-во циклов больше 1, continue не сможет выйти из всех циклов
+нужно использовать continue 2, с break тоже самое, break 6
+
+
+Перебор несколько форматов
+for i in *.jpg *.png; do
+	echo $i
+done
+
+
+Если стоит set -e в сценарии
+можно писать такие штуки: rm -rf /path/to/file || true
+Если /path/to/file будет ENOENT, тогда вернется false и сценарий завершится,
+но если написать || true, все будет хорошо.
+
+
+Чтобы добавить элемент в пустой массив в Bash,
+можно использовать следующий синтаксис
+
+array=()
+
+array+=("element1")
+array+=("element2")
+array+=("element3")
+
+echo ${array[@]}
+
+
+Проверка команды перед использованием
+if command -v xsel; then
+	...
+fi
+
+
+Перебор всех аргументов кроме первого, например $ script.sh -s a b c d
+# Ignore the first argument
+shift
+
+for arg in "$@"
+do
+    echo "Argument: $arg"
+    # Add your processing here
+done
+
+
+Пример логирования, сохранение вывода скрипта, например сборка пакета
+for i in a b c
+do
+        exec &> >(tee "$i")
+        sleep .1
+
+        echo "$i"
+
+	# в таком случае необходимо вернуть 1,2 обратно в tty,
+	# иначе будут проблемы/конфликты логирования
+        exec 1>$(tty) 2>$(tty)
+done

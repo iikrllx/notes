@@ -1,0 +1,18 @@
+tig - TUI интерфейс (ncurses) для git.
+Можно использовать этот инструмент для code review.
+
+Находясь на нужной ветке:
+$ tig
+
+l - verbose view on current branch
+m - main view
+r - git branch -r
+R - refresh
+t - tree files
+s - git status
+y - stash view
+q - close
+Q - close all
+e - vim edit
+g - grep
+D - сокращает дату

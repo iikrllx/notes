@@ -1,0 +1,292 @@
+There’s a kernel of truth in the old Unix joke, "the only command you need to know is man."
+
+--- Описание
+1. Главные пользовательские команды
+2. Системные вызовы
+3. Библиотека функции С
+4. Устройства и сетевые интерфейсы
+5. Формат файла
+6. Игры
+7. Смешанные файлы
+8. Стандартные операции ядра Linux
+
+Маны хранятся обычно в сжатом виде .gz по пути /usr/share/man/man-N
+Для создания man используется определенный синтиксис / язык.
+
+Для того чтобы узнать какой man предоставляет утилита / команда
+$ whatis stdout
+
+Поиск по ключевому слову
+$ man -k unistd
+$ man -k '[a-z]' | grep '(3)'
+$ man -K PRIx32
+$ man -wK PRIx32
+$ man -f open
+$ man 0 stdio.h
+$ man 3 stdio
+
+Поиск 'chdir'
+$ man -k [a-z] | grep '(2)' | grep 'change'
+
+Если man не ищется
+$ sudo mandb
+
+Для того чтобы получить информацию / описание о сущности
+$ info grub
+
+Утилита info хранит архивы в /usr/share/info и их не так много как хотелось бы
+она отличается от man (горячие клавиши) можно обратиться к 'H' (справке)
+обычные man намного полезнее, а в info нет описаний библ.функций и т.д.
+
+
+--- Оболочка
+man nohup                 игнорирует hangups
+man getconf               получить основные размеры
+man watch                 показывает вывод с интервалом
+man aplay                 воспроизвести что-либо
+man beep                  звук beep
+man openssl rsautl        RSA utility
+man openssl genrsa        generate an RSA private key
+man openssl enc           symmetric cipher routines
+man openssl               openSSL утилита, шифрование - крипто
+man wipe                  безопасное удаление файлов с дисков
+man shred                 полное уничтожение
+man cpio                  архивы
+man update-initramfs      обновление initrd образа
+man umask                 маска по-умолчанию (для новых файлов)
+man chattr                задать атрибуты файла
+man lsattr                просмотреть атрибуты файла
+man ulimit                список лимитов
+man proc                  описание /proc
+man type                  $ type ulimit / $ type ls
+man unexpand              конверт - пробелы в табы
+man expand                конверт - табы в пробелы
+man indent                убирает пробелы, замена, С программы
+man getpcaps              получение возможностей процесса
+man getcap                получение возможности
+man setcap                задать возможность
+man capsh                 оболочка возможностей (-- / ==) bash с новыми caps
+man auditctl              инструмент для управления аудитом
+man autrace               strace-подобная программа для аудита
+man ausearch              поиск по журналу аудита
+man aureport              инструмент для генерации итоговых отчетов на основе логов демона аудита
+man getfacl               get ACL
+man setfacl               set ACL
+man ls                    покажет список содержимого
+man mkdir                 создаст директорию
+man chmod                 меняет атрибуты файла
+man chown                 меняет владельца
+man echo                  выводит строку текста
+man tty                   показывает имя файла терминала, подключенного к stdin
+man touch                 изменить временные метки файлов
+man cat                   печать информации
+man dd                    преобразовать и скопировать файл
+man mv                    перенести или переименовать файл
+man cp                    сделать копию файла
+man rm                    удалить файл
+man date                  показывает дату и время
+man time                  время
+man find                  ищет файлы и директории
+man file                  показывает тип файла
+man ln                    ссылки на файлы
+man diff                  сравнивает файлы
+man patch                 применить diff файл к сущности
+man which                 показывает полный путь файла (команды)
+man cal                   календарь
+man pwd                   текущий путь
+man w                     показывает информацию о пользователях
+man seq                   выдает последовательность чисел
+man less                  для чтения файлов
+man rev                   перевернуть текст
+man uptime                время работы системы
+man users                 показывает имена пользователей в системе
+man groups                показывает группы пользователя
+man groupadd              создает группу
+man useradd               создает пользователя
+man groupdel              удаляет группу
+man userdel               удаляет пользователя
+man passwd                изменить пароль пользователя
+man useradd               создание пользователя
+man chpasswd              изменить пароль пользователя
+man history               управление историей команд
+man alias                 псевдонимы
+man who                   кто в системе
+man last                  показывает список последних сессий пользователей
+man shutdown              завершить, перезагрузить или выключить
+man poweroff
+man reboot
+man halt
+man nl                    показывает номера строк
+man devscripts            описывает состав devscripts
+man debconf-show          покажет как настроен пакет
+man dpkg-reconfigure      настройка / конфигурация пакетов
+man dpkg-deb              упаковывает, распаковывает, предоставляет информацию о пакетах
+man dpkg-source           помогает в управлении (.dsc)
+man dpkg-buildpackage     создает пакет из sources
+man dpkg                  управление пакетами в системе
+man apt-get               пакетный менеджер (старый, проверенный временем)
+man apt                   пакетный менеджер (новый, с новыми аргументами)
+man apt-secure            система для управления безопасностью apt
+man apt-key               управление ключами
+man apt-cache             управляет описанием пакета (package cache)
+man apt-file              поиск файлов пакетов
+man lintian               анализирует пакет на наличие ошибок
+man debchange             управляет debian/changelog
+man dch                   управляет debian/changelog
+man fakeroot              исполняет команду в фальшивом root окружении
+man gpg                   подпись
+man debuild               создает deb пакет (обертка для dpkg-buildpackage fakeroot lintian debsign)
+man debclean              чистит дерево исходников
+man equivs-control        создает control файл (который нужно отредактировать)
+man equivs-build          создает debian пакет (нужно передать созданный файл equivs-control)
+man dh_make               подготавливает окружение для сборки пакета
+man quilt                 управление патчами
+man pbuilder              сборка пакета в chroot окружении
+man pdebuild              обертка для debuild
+man reprepro              создание репозитория
+man make                  управление группами программ
+man pkg-config            выдает мета-информацию об установленных библиотеках
+man ps                    показывает снимок процессов
+man pstree                показывает дерево процессов (psmisc)
+man pidof                 найдет PID процесса программы по имени
+man top                   показывает процессы
+man htop                  показывает процессы
+man id                    идентификатор пользователя
+man kill                  завершить процесс
+man killall               завершить группу процессов
+man jobs                  статус задач
+man fg                    задача на передний план
+man bg                    задача на задний план
+man nice                  значение nice
+man strace                показывает системные вызовы процесса
+man bash                  интерпретатор bash
+man exit                  выходи из shell
+man test                  делает проверки и сравнивает выражения
+man exec                  выполнить процесс с заменой
+man sleep                 пауза / сон
+man du                    размер файлов (использованное место)
+man df                    свободное место на диске
+man free                  выводит свободное место и загруженное системы
+man fdisk                 управление разделами таблицы
+man fstab                 содержит информацию об примонтированных ФС
+man fs                    описания всяких ФС
+man mkfs                  создает ФС
+man fsck                  проверка и восстановление ФС
+man mount                 монтирование ФС
+man umount                размонтирование ФС
+man findmnt               красивый вывод mount
+man gparted               управляет разделами
+man cut                   вырезает секции
+man wc                    подсчитывает слова, байты, новые строки и т.д
+man sort                  фильтр сортировки текста
+man grep                  выводит строки, которые соответствуют паттерну
+man awk                   выводит по паттерну
+man sed                   редактор потока (преобразование текста)
+man tr                    преобразование и удаление символов
+man tail                  выводит последние значения файла
+man head                  выводит первые значения
+man tee                   читает из stdin и пишет в stdout или в файлы
+man env                   показать среду (окружение)
+man printenv              показывает окружение
+man set                   показывает полное окружение
+man hostnamectl           контроль hostname
+man systemctl             контроль systemd
+man systemd               управление сервисами
+man coredumpctl           получение и обработка core dumps файлов
+man sysctl                настроить параметры ядра во время выполнения
+man loginctl              контроль systemd логин
+man localectl             система для управления локалью
+man gcc                   C / C++ компилятор GNU
+man cpp                   препроцессор
+man as                    ассемблер
+man ld                    компановщик
+man ldd                   показывает информацию об (shared) библиотеках, зависимости
+man ld.so                 хранит важную информацию об окружении ld, библиотеках
+man nm                    иформация о символах ELF файлах
+man ar                    создает, изменяет и извлекает архивы (статические библиотеки)
+man errno                 имена и описание системный ошибок (moreutils)
+man mkfifo                создание очереди (pipe)
+man inode                 inode информация
+man stat                  показывает статус файла или ФС
+man chvt                  изменить терминал
+man lsof                  список открытых файлов
+man sync                  синхронизировать кэшированные записи в постоян.хранилище
+man pv                    прогресс отправки данных
+man genisoimage           создает ISO9660 и другие ФС
+man 7z
+man tar                   работа с архивами tar
+man gzip
+man gunzip
+man locale                показывает информацию локали
+man at                    однократная задача
+man crontab               многократная задача
+man initrd                RAM диск для загрузки системы
+man sudo                  исполняет команду от имени другого id
+man sudoers               sudo плагин безопасности
+man ssh-keygen            openSSH утилита
+man ssh-keyscan           собирает публичные ключи
+man sftp                  FTP только безопасный трансфер
+man ssh                   openSSH удаленное подключение
+man sshpass               поставщик пароля
+man update-grub           обновляет меню загрузки
+man whiptail              TUI
+man kconfig-monf          Kconfig (пакет kconfig-frontends)
+man git                   система контроля версий git
+man git-push
+man tig                   TUI для системы контроля версий git
+man mc                    визуализатор shell
+man vim                   текстовый редактор
+man valgrind              отладка памяти
+man gdb                   отладка
+man hostname              показывает имя хоста
+man host                  DNS поиск
+man nslookup              запрос имен
+man traceroute            показывает трассировку пакета до сетевого хоста
+man tcpdump               анализ трафика сети
+man ifconfig              конфигурации сетевых интерфейсов
+man ping                  послать ICMP пакеты
+man curl                  отправка каких либо данных
+man wget                  скачивание
+man scp                   openSSH копирование файлов
+man nmap                  сканер портов
+man iptables              правила маршрутизации
+man netcat                читает или пишет данные через сетевое подключение tcp или udp
+man -k ^ls
+man lsb_release           информация дистрибутива
+man lspci                 показывает все PCI (взаимосвязь периферийных компонентов) устройства (lspci -v)
+man lsblk                 показывает блочные устройства
+man lscpu                 показывает информацию о CPU
+man hwinfo                информация об аппаратном обеспечении
+man uname                 информация системы
+man xsel                  буфер обмена
+man xset                  X (xset r rate 250 60)
+man dmesg                 выводит, контролирует kernel буфер (сообщения ядра)
+man journalctl            запрос журнала systemd
+man insmod                добавить модуль в ядро
+man rmmod                 удалить модуль из ядра
+man modprobe              добавить, удалить модуль из ядра
+man lsmod                 список загружаемых модулей
+man modinfo               информация о модуле
+man depmod                сгенерировать modules.dep & map файлы
+
+virsh --help              утилита управления virt-manager
+vboxmanage --help         утилита управления virtualbox
+set --help                задает опции, параметры, меняет атрибуты, выводит shell
+unset --help              зачистка значения
+shift --help              смещает позиционные параметры
+export --help             экспорт сущности в шелл окружение
+declare --help            объявляет переменные, массивы, функции и другое
+read --help               принимает текст из stdin (или другого fd)
+exec --help               заменяет процесс другим (исполняет)
+install --help            устанавливает, переносит файл
+cd --help                 меняет путь (change path)
+source --help             исполняет команды в текущий файл
+readonly --help           делает сущность readonly
+local --help              объявляет локальную сущность
+trap --help               обработка сигнала
+dirname --help            /usr/bin/file -> /usr/bin/
+basename --help           /usr/bin/file -> file
+gettext --help            перевод текста
+pushd --help              забросить директорию наверх стека
+popd --help               убрать директорию со стека
+dirs --help               список стека
