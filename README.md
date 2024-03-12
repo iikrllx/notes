@@ -6,17 +6,17 @@
 
 Языки:
 ```
-doc/languages/assembler/
-doc/languages/bash/
-doc/languages/c/
+languages/assembler/
+languages/bash/
+languages/c/
 ```
 
 Computer Science, Linux:
 ```
-doc/linux/
+linux/
 ```
 
 Шпаргалки, инструменты, горячие клавиши и т.д:
 ```
-doc/cheat-sheets/
+cheat-sheets/
 ```
