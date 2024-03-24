@@ -642,7 +642,7 @@ $ umask -S             # покажет установленные perms
 Файлы считаются: 666 - umask, например: (666 - 2 = 664)
 Директории считаются: 777 - 22 (22 это umask)
 
-https://handynotes.ru/tools/umask-kalkulyator
+https://wintelguy.com/umask-calc.pl
 
 
 --- update-initramfs
