@@ -562,14 +562,14 @@ CDROM   - разновидность дисков с записанными на
 --- Android & USB
 Получить права разработчика в телефоне, разрешить отладку через USB
 Подключиться через USB к телефону, выбрать (передача файлов)
-В Linux терминале:
+
+Очистка ненужных пакетов:
 $ adb shell
 $ pm list packages | grep <name>
 $ pm uninstall -k --user 0 <name>
 
-Либо: connect phone and select data transfer over USB
-$ jmtpfs /mnt/
-После: $ umount /mnt
+Перенести файлы с ПК на телефон:
+$ sudo jmtpfs /mnt/
 
 
 --- Таблица разделов MBR vs GPT
