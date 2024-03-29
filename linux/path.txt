@@ -88,7 +88,6 @@ urandom без действий
                      какой используется $ ls -ld /proc/self/exe
 /proc/sys/kernel/    информация о ядре
 /proc/version        версия ядра и информация
-/proc/kcore          хранит информацию о ядре
 
 /proc/sys/kernel/hostname
 /proc/sys/kernel/{osrelease,ostype,version}
