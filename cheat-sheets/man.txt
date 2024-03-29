@@ -40,6 +40,7 @@ $ info grub
 
 
 --- Оболочка
+man mktemp                создание временных файлов
 man nohup                 игнорирует hangups
 man getconf               получить основные размеры
 man watch                 показывает вывод с интервалом
