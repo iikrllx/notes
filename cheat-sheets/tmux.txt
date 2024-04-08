@@ -1,5 +1,3 @@
-tmux - терминальный мультиплексер (имеет несколько сигнальных входов).
-
 --- Window
 ctrl + b + shift + " - split window vertically
 ctrl + b + shift + % - split window horizontally
