@@ -9,6 +9,7 @@
 * mock vs koji
 * toolset
 * createrepo
+* Пример сборки пакета
 
 RHEL дистрибутивы это Centos, Fedora.
 Centos имеет последнюю версию 8, она не поддерживается,
@@ -326,3 +327,74 @@ baseurl=http://192.168.5.139/for-emock/
 enabled=1
 gpgcheck=0
 cost=2000
+
+
+--- Пример сборки пакета
+$ rpmdev-setuptree
+
+rpmbuild/
+├── BUILD
+├── RPMS
+├── SOURCES
+├── SPECS
+└── SRPMS
+
+cat << EOF >> hello.sh
+#!/bin/sh
+echo "Hello world"
+EOF
+
+$ mkdir hello-0.0.1
+$ mv hello.sh hello-0.0.1
+$ tar -cvzf hello-0.0.1.tgz hello-0.0.1
+$ mv hello-0.0.1.tgz ~/rpmbuild/SOURCES
+
+$ rpmdev-newspec hello
+Затем необходимо отредактировать ~/rpmbuild/SPECS/hello.spec под наш пакет
+
+Например:
+
+Name:           hello
+Version:        0.0.1
+Release:        1%{?dist}
+Summary:        A simple hello world script
+BuildArch:      noarch
+
+License:        GPL
+Source0:        %{name}-%{version}.tgz
+
+Requires:       bash
+
+%description
+A demo RPM build
+
+%prep
+%setup -q
+
+%install
+rm -rf $RPM_BUILD_ROOT
+mkdir -p $RPM_BUILD_ROOT/%{_bindir}
+cp %{name}.sh $RPM_BUILD_ROOT/%{_bindir}
+
+%clean
+rm -rf $RPM_BUILD_ROOT
+
+%files
+%{_bindir}/%{name}.sh
+
+%changelog
+* Sun Nov  18 2020 Valentin Bajrami <valentin.bajrami@slimmer.ai> - 0.0.1
+- First version being packaged
+
+Существуют различные макросы
+$ rpm --eval '%{_bindir}'
+$ rpm --eval '%{_datadir}'
+$ rpm --eval '%{_sysconfdir}'
+
+Проверить spec файл на ошибки
+$ rpmlint ~/rpmbuild/SPECS/hello.spec
+
+Сборка пакетов
+$ rpmbuild -bs ~/rpmbuild/SPECS/hello.spec
+$ rpmbuild -bb ~/rpmbuild/SPECS/hello.spec
+$ rpmbuild -ba ~/rpmbuild/SPECS/hello.spec
