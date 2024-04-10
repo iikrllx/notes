@@ -11,7 +11,7 @@ languages/bash/
 languages/c/
 ```
 
-Computer Science, GNU, Linux:
+GNU, Linux, Computer Science:
 ```
 gnu-and-linux/
 ```
