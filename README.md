@@ -11,9 +11,9 @@ languages/bash/
 languages/c/
 ```
 
-Computer Science, Linux:
+Computer Science, GNU, Linux:
 ```
-linux/
+gnu-and-linux/
 ```
 
 Шпаргалки, инструменты, горячие клавиши и т.д:
