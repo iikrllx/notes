@@ -598,6 +598,15 @@ LANG=ru_RU.UTF-8
 SHELL=/bin/sh
 PWD=/home/myuser
 
+Пример:
+@reboot sleep 10 && ~/.local/bin/mygit.sh pull
+Скрипт 'mygit.sh' подтягивает изменения в проектах, sleep 10 установлен для того,
+чтобы DNS/SSH успели подняться (нужно для git pull)
+
+Еще есть такие трюки:
+@reboot ~/.profile; ~/.local/bin/script.sh
+Если не устраивает скудное окружение crontab, можно вставить пользовательское.
+
 
 --- X clipboards
 * Primary
