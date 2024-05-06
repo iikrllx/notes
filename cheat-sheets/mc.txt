@@ -1,3 +1,5 @@
+https://github.com/iikrllx/dotfiles-debian/tree/master/.config/mc
+
 F3 просмотр содержимого
 F4 изменить
 F5 копия
