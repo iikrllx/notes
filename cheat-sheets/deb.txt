@@ -28,6 +28,7 @@
 * eatmydata
 * Репозитории и зеркала
 * DEBIAN_FRONTEND
+* Игнорировать рекомендуемые зависимости
 
 
 --- Репозиторий
@@ -718,3 +719,15 @@ $ eatmydata apt-get install <a lot of packages>
 Установка пакетов без интерактивных режимов (вопросов, которые могут тормозить процесс установки).
 Вместо этого будут установлены значения по-умолчанию.
 $ DEBIAN_FRONTEND=noninteractive apt-get -y install $pack
+
+
+--- Игнорировать рекомендуемые зависимости
+Существуют пакеты, которые ставят рекомендуемые пакеты, тем самым загрязняют систему.
+Например, пакет neofetch (который вместе с ним устанавливает w3m, w3m-img и подобные),
+хотя без этих пакетов он так же отлично работает. Можно использовать опцию:
+$ sudo apt-get install neofetch --no-install-recommends
+
+А можно создать конфигурационный файл /etc/apt/apt.conf.d/99_norecommends и прописать:
+APT::Install-Recommends "false";
+APT::AutoRemove::RecommendsImportant "false";
+APT::AutoRemove::SuggestsImportant "false";
