@@ -4,30 +4,38 @@ Up 				k
 Bottom 				j
 Page down 			d
 Page up 			u
-Delete message 			D
-Delete thread 			Ctrl + d
+
 Sort				Ctrl + o
 Refresh messages                Tab
+
 Mark thread read 		Ctrl + r
 Mark thread new 		N
-Undelete message 		U (u)
+Mark delete message 		D
+Mark delete thread 		Ctrl + d
+Undelete message (remove mark)	U (u)
+
 Open message 			l, Enter
 Edit or view message		e
+
 Group reply 			R
 Reply 				r
+
 Forward message 		f
 New message 			m
+
 View attachments 		v
 Compose to Sender 		@
 Save message (to file) 		s
 Toggle collapse thread 		Space, Esc+v
 Toggle collapse all threads 	Esc+V
 Jump to parent message 		P
+
 Show sidebar 			B
 Show full sidebar 		y
 Up 				Ctrl + k
 Down 				Ctrl + j
 Open 				Ctrl + o
+
 Help				Shift + ?
 
 Во время отправки нового письма можно использовать:
