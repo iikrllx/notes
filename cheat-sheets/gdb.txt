@@ -1,3 +1,5 @@
+https://github.com/iikrllx/dotfiles-debian/blob/master/.gdbinit
+
 Интерфейс в gdb (debug режима) называется call stack (стек функций).
 Работает по принципу push / pop, кладет на вершину и снимает с вершины.
 В call stack обычно видны, вызовы функций, локальные переменные, параметры, аргументы и т.д.

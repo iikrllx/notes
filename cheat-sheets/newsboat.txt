@@ -1,0 +1,25 @@
+https://github.com/iikrllx/dotfiles-debian/blob/master/.newsboat/config
+
+Go to last entry 		G
+Go to first entry 		g
+Up 				k
+Bottom 				j
+Page down 			d
+Page up 			u
+
+Open message 			l, Enter
+Read message                    i
+Next feed                       J
+Previous feed                   K
+Next unread                     n
+Previous unread                 N
+
+Save in file                    s
+Reload                          r
+Reload all                      R
+
+Mark read                       A
+Mark all read                   C
+
+Search                          /
+Help                            ?
