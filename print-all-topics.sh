@@ -10,7 +10,7 @@
 
 for f in $(find . -type f -name "*.txt" -not -empty); do
 	if grep 'Темы:' $f >/dev/null; then
-		echo -e "\e[96m*** ----- $f ----- ***\e[0m"
+		echo "\e[96m*** ----- $f ----- ***\e[0m"
 		grep -Pzo 'Темы:\n\K\*.*\n(?:\*.*\n)*' --color $f
 	fi
 done
