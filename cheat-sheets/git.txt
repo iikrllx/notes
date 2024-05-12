@@ -33,7 +33,7 @@
 * Merge Request и Pull Request
 * Github vs Bitbucket vs Gitlab
 * Github traffic
-* README + оформление
+* README оформление
 
 
 --- Описание
