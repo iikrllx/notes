@@ -19,7 +19,8 @@
 * Выполнить сценарий при старте системы
 * Crontab
 * X clipboards
-* Копирование скрытных файлов
+* Копирование скрытых файлов
+* Копирование вместе с родителем
 * lsattr / chattr
 * /etc/skel
 * umask
@@ -627,6 +628,11 @@ $ xsel -p -i
 --- Копирование скрытых файлов
 $ cp -r /etc/skel/. /home/dir
 $ cp -rT /etc/skel /tmp/home
+
+
+--- Копирование вместе с родителем
+$ cp -r --parents /var/log /backup
+-> /backup/var/log
 
 
 --- lsattr / chattr
