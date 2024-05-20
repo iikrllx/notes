@@ -13,6 +13,7 @@ Refresh messages                Tab
 Mark thread read 		Ctrl + r
 Mark thread new 		N
 Mark delete message 		D
+Mark purge message 		H
 Mark delete thread 		Ctrl + d
 Undelete message (remove mark)	U (u)
 
