@@ -7,6 +7,8 @@
 * Debian Mailing List
 * Package sponsor (debian)
 * Co-maintenance
+* Какие роли есть в Debian
+* С чего начать
 
 
 --- GNU (GNU's Not Unix)
@@ -234,8 +236,8 @@ https://www.debian.org/MailingLists/subscribe
 Например, в сообществе Debian, это человек, который имеет право загружать пакеты в официальный
 репозиторий Debian. Он обычно отвечает за проверку пакетов, их соответствие стандартам Debian
 и их безопасность. Если разработчик пакетов хочет загрузить свой пакет в официальный репозиторий,
-ему нужно найти спонсора, который согласится проверить этот пакет и загрузить его.
-Обычно спонсорами могут быть члены Debian Debian Maintainers или Debian Developers.
+ему нужно найти Debian спонсора, который согласится проверить этот пакет и загрузить его.
+Обычно спонсорами могут быть члены Debian Maintainers или Debian Developers.
 
 
 --- Co-maintenance
@@ -243,3 +245,55 @@ Co-maintenance означает совместное управление или
 Это означает, что несколько людей работают вместе над поддержанием и обновлением пакета, чтобы обеспечить
 его надлежащее функционирование и актуальность. В таких случаях обычно существует команда сопровождения,
 которая делит ответственность за пакет и обеспечивает его поддержку в сообществе Debian.
+
+
+--- Какие роли есть в Debian
+* Debian Maintainer (DM): This is the first step – as DM you can upload your own packages to the
+Debian archive (with some restrictions). Unlike Sponsored Maintainers, Debian Maintainers can
+maintain packages without a sponsor.
+
+* Debian Developer (DD): This is the traditional full membership role in Debian. A DD can
+participate in Debian elections. Uploading Debian Developers can upload any package to the
+archive. Before you become an Uploading DD, you should have a track record of maintaining packages
+for at least six months (for example, uploading packages as a DM, working inside a team or
+maintaining packages uploaded by sponsors). Non-uploading DDs have the same packaging rights as
+Debian Maintainers. Before you apply as a non-uploading DD, you should have a visible and
+significant track record of working inside the project.
+
+* Mentor - это опытный участник Debian, который помогает новичкам в сообществе разобраться с
+процессами разработки и сопровождения пакетов, а также с другими аспектами участия в проекте.
+
+* Sponsor - спонсор обязуется проверить, что нет серьезных проблем с качеством, но не записывается
+как сопровождающий пакета. Спонсорство может быть одноразовым событием, либо спонсор также может
+действовать неформально как наставник, помогая находить ошибки и улучшать упаковку.
+
+* Sponsored Maintainer - это человек, который сопровождает Debian пакеты и выкладывает
+их в архивы засчет спонсора (DD/DM - он как бы контролирует это все).
+
+* Debian Maintainer - это участник Debian, который имеет право загружать пакеты в Debian-архивы и
+обеспечивать их обслуживание/сопровождение и обновление.
+
+
+--- С чего начать
+Чтобы стать Debian Maintainer, необходимо сначала стать Sponsored Maintainer, т.е. иметь спонсора из
+числа существующих Debian Developers, который будет поддерживать работу и помогать внести вклад
+в проект. После того, как вы продемонстрируете свою способность и активность в Debian, можно
+подать заявку на статус Debian Maintainer.
+
+https://wiki.debian.org/SponsoredMaintainer
+
+Можно начать делать review пакетов, отправлять исправления/советы мейнтейнеру:
+
+* Verify Lintian outputs: Did Lintian miss something, are fixes semantically correct?
+* Does the package satisfy Debian's best practices for packages?
+* Does the package correctly declare dependencies as defined in the policy?
+* Does the package meet the DFSG? If yes, is the copyright file up to date and correct?
+* Do the maintainer scripts supplied with the package look robust, idempotent and useful?
+* Is there a watch file? If yes, does it work?
+* Can you build the package in a clean build chroot?
+* Was the upstream tarball modified? If yes, is there a good reason to do so?
+
+https://wiki.debian.org/SponsoredMaintainer
+https://wiki.debian.org/HelpDebian/WithPackages
+https://wiki.debian.org/HelpDebian
+https://www.debian.org/devel/wnpp/
