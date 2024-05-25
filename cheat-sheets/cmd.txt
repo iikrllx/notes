@@ -318,7 +318,8 @@ $ apt-cache policy <pack>    # версия пакета + источники
 $ apt search <pack>          # поиск пакета
 $ apt serch <pack> | less    # поиск пакета
 $ apt list                   # все доступные пакеты
-$ apt-cache search vim tmux  # поиск пакета (более минималистично)
+$ apt-cache search vim       # поиск пакета (более минималистично)
+$ apt-cache search ^vim$     # поиск пакета (например по шаблону)
 $ apt-cache show <pack>      # описание пакета (control)
 $ apt-cache showsrc <pack>   # описание исходника (dsc - debian source control)
 $ apt-cache madison <pack>   # доступные версии
