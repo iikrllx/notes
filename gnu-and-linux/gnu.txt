@@ -285,10 +285,7 @@ significant track record of working inside the project.
 проект. После того, как вы продемонстрируете свою способность и активность в Debian, можно подать
 заявку на статус Debian Maintainer.
 
-https://wiki.debian.org/SponsoredMaintainer
-
 Можно начать делать review пакетов, отправлять исправления/советы мейнтейнеру:
-
 * Verify Lintian outputs: Did Lintian miss something, are fixes semantically correct?
 * Does the package satisfy Debian's best practices for packages?
 * Does the package correctly declare dependencies as defined in the policy?
@@ -298,7 +295,6 @@ https://wiki.debian.org/SponsoredMaintainer
 * Can you build the package in a clean build chroot?
 * Was the upstream tarball modified? If yes, is there a good reason to do so?
 
-https://wiki.debian.org/SponsoredMaintainer
-https://wiki.debian.org/HelpDebian/WithPackages
-https://wiki.debian.org/HelpDebian
-https://www.debian.org/devel/wnpp/
+If you want to contribute to Debian, but you do not know which packages to contribute to, take a
+look at "Request for help" (RFH), "Request for adopter" (RFA), "Orphaned package" (O) and "Request
+for package" (RFP) bugs. See WNPP.
