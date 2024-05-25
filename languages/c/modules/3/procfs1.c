@@ -28,7 +28,7 @@ static ssize_t procfile_read(struct file *file, char *buffer, size_t length, lof
 		if (length < hello_len)
 			return -EINVAL;
 
-		/* аналогична snprintf, только здесь копирование из пространства ядра в user space  */
+		/* аналогична snprintf, только здесь копирование из пространства ядра в user space */
 		/* при записи бы копировалось из пространство пользователя в ядро (copy_from_user or get_user) */
 		/* get_user и put_user обрабатывают только 1 символ, а copy_to_user и copy_from_user полностью */
 		if (copy_to_user(buffer, hello_str, hello_len))
