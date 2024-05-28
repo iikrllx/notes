@@ -26,7 +26,7 @@ languages/bash/
 languages/c/
 ```
 
-GNU, Linux, Kernel, Memory, Network, Computer Science и т.д:
+GNU, Debian, Linux, Kernel, Memory, Network, Computer Science и т.д:
 ```
 gnu-and-linux/
 ```
