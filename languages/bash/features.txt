@@ -3,7 +3,7 @@ echo "${#word}" # 5
 
 
 for i in $(seq 4); do
-  echo "$i" # 1 2 3
+	echo "$i" # 1 2 3
 done
 
 
@@ -14,6 +14,7 @@ $(ls -al)
 EOF
 
 
+Предотвращает интерпретацию специальных символов и переменных
 cat <<\EOF > file
 #!/bin/bash
 printf "${green}$ver \n$up \n$mod_name \n${coff}"
@@ -24,6 +25,12 @@ cat << EOF >&2
 not good my friend
 EOF
 
+Также предотвращает интерпретацию специальных символов и переменных
+cat << 'EOF' > file
+#!/bin/bash
+printf "${green}$ver \n$up \n$mod_name \n${coff}"
+EOF
+
 
 value="World"
 echo "Hello ${value}"
@@ -31,7 +38,7 @@ echo "Hello ${value}"
 
 Переменная REPLY хранит значение ввода (read)
 if [ "$REPLY" == "input" ]; then
-  echo "good"
+	echo "good"
 fi
 
 
@@ -66,11 +73,11 @@ echo "$words" | wc -w
 
 Создание функции
 function func {
-  pass
+	pass
 }
 
 func () {
-  pass
+	pass
 }
 
 
@@ -78,10 +85,10 @@ func () {
 text="hah"
 function func
 {
-  local value
-  value="hello"
+	local value
+	value="hello"
 
-  echo "$value" # success
+	echo "$value" # success
 }
 
 echo "$value" # not success
@@ -94,7 +101,7 @@ readonly title="New Title"
 
 Самовызываемая функция
 function func {
-  echo "maybe"
+	echo "maybe"
 } && func
 
 
@@ -108,24 +115,24 @@ echo "${word:1}" # ello
 read -p "Input -> " value
 
 case "$value" in
-  [a-z] )
-    echo "a-z"
-  ;;
+	[a-z] )
+		echo "a-z"
+	;;
 
-  [A-Z] )
-    echo "A-Z"
-  ;;
+	[A-Z] )
+		echo "A-Z"
+	;;
 
-  * )
-    echo "All"
-  ;;
+	*)
+		echo "All"
+	;;
 esac
 
 
 Конструкция case с ИЛИ
 case $1 in
-  "--address" | "-a") echo "--address" ;;
-  "--help" | "-h") echo "--help" ;;
+	"--address" | "-a") echo "--address" ;;
+	"--help" | "-h") echo "--help" ;;
 esac
 
 
@@ -147,7 +154,7 @@ read -p $'\nHello\n\t' INPUT
 
 Если нужен определенный числовой диапозон 1-60
 if (( "$number" >= 1 && "$number" <= 60 )); then
-  echo "Good range"
+	echo "Good range"
 fi
 
 
@@ -164,10 +171,10 @@ useradd -m user -s /bin/bash
 echo "user:1" | chpasswd 2>/dev/null
 
 if test ! $(id -u $1 2>/dev/null); then
-  useradd -m $1 -s /bin/bash; echo "$1:1" | chpasswd 2>/dev/null
-  [ $? == 0 ] && echo -e "\e[92m$1 - successful creation\e[0m"
+	useradd -m $1 -s /bin/bash; echo "$1:1" | chpasswd 2>/dev/null
+	[ $? == 0 ] && echo -e "\e[92m$1 - successful creation\e[0m"
 else
-  echo -e "\e[91m$1 - user exist\e[0m"
+	echo -e "\e[91m$1 - user exist\e[0m"
 fi
 
 
@@ -218,40 +225,35 @@ EOF
 without_quotes=$(echo $var | tr -d '"')
 
 
-release=$(lsb_release -d | cut -d' ' -f 2-) # название дистрибутива
-test "$(echo "$release" | grep "Astra")" || exit 1 # проверка на наличие Astra
-# без echo проверка бы не получилась и не стоит забывать про test "$(commands)"
-
-
 if test "$1" == "write"; then
-  # code here ...
+	# code here ...
 fi
 
 if test "$(cat ~/.fly/keyshortcutrc | grep "Alt|BackSpace")"; then
-  # code here ...
+	# code here ...
 fi
 
 if test ! -z "$value"; then
-  # code here ...
+	# code here ...
 fi
 
 if test ! "$(cat /etc/crontab | grep network)"; then
-  # code here ...
+	# code here ...
 fi
 
 
 Если функция возвращает какое-либо значение и надо сделать проверку.
 check_update_new_kernel()
 {
-  if test $up == update_5 || test $up == update_6; then
-    return 0
-  else
-    return 1
-  fi
+	if test $up == update_5 || test $up == update_6; then
+		return 0
+	else
+		return 1
+	fi
 }
 
 if check_update_new_kernel; then
-  echo good
+	echo good
 fi
 
 Или так
@@ -266,23 +268,23 @@ exclamation mark с массивами.
 если есть два массива с одинаковым размером, то можно
 a=(a b c) b=(c b a)
 for i in ${!a[*]}; do
-  echo ${a[i]} ${b[i]}
+	echo ${a[i]} ${b[i]}
 done
 
 
 Если нужно перебрать список и не выходить из цикла при совпадении.
 list=(a b c)
 for i in ${list[*]}; do
-  err_counter=0
-  if $value == $i; then
-    echo not good $i # делаем вывод записей всего списка
-    err_counter=$((err_counter + 1))
-  fi
+	err_counter=0
+	if $value == $i; then
+		echo not good $i # делаем вывод записей всего списка
+		err_counter=$((err_counter + 1))
+	fi
 done
 
 А затем сделать проверку и выйти.
 if (( $err_counter > 0 )); then
-  exit 1
+	exit 1
 fi
 
 
@@ -290,8 +292,8 @@ fi
 values=(a b c)
 
 abc() {
-  list=$1
-  for l in ${list[*]}; do echo "$l"; done
+	list=$1
+	for l in ${list[*]}; do echo "$l"; done
 }
 
 abc "${values[*]}" # здесь важно передавать через * и кавычки
@@ -392,7 +394,7 @@ echo $PPID
 
 
 Если кол-во циклов больше 1, continue не сможет выйти из всех циклов
-нужно использовать continue 2, с break тоже самое, break 6
+можно использовать continue 2, с break тоже самое, break 6
 
 
 Перебор несколько форматов
@@ -407,7 +409,7 @@ done
 но если написать || true, все будет хорошо.
 
 
-Чтобы добавить элемент в пустой массив в Bash,
+Чтобы добавить элемент в пустой массив Bash,
 можно использовать следующий синтаксис
 
 array=()
@@ -431,22 +433,22 @@ shift
 
 for arg in "$@"
 do
-    echo "Argument: $arg"
-    # Add your processing here
+	echo "Argument: $arg"
+	# Add your processing here
 done
 
 
 Пример логирования, сохранение вывода скрипта, например сборка пакета
 for i in a b c
 do
-        exec &> >(tee "$i")
-        sleep .1
+	exec &> >(tee "$i")
+	sleep .1
 
-        echo "$i"
+	echo "$i"
 
 	# в таком случае необходимо вернуть 1,2 обратно в tty,
 	# иначе будут проблемы/конфликты логирования
-        exec 1>$(tty) 2>$(tty)
+	exec 1>$(tty) 2>$(tty)
 done
 
 getent passwd 1000 | cut -d ':' -f1 # получить имя 1000 пользователя
@@ -468,7 +470,8 @@ chmod 700 ~/b
 umask 077
 mkdir ~/a
 
-Отлично подходит для файлов в которых есть пробелы
+
+Отлично подходит для файлов в которых есть ПРОБЕЛЫ
 find /etc -type f | while read -r f; do
 	echo "here - $f"
 done
