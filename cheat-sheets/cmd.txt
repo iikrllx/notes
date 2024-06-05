@@ -210,7 +210,7 @@ $ cat /dev/urandom | tr -dc '0-9'                            # -c бинарно
 
 sed:
 $ sed 's/user/AAA/' /etc/passwd                              # меняет user на AAA
-$ sed '3d' /etc/passwd                                       # удаление 3 строки в файле
+$ sed '3d' /etc/passwd                                       # удаление 3 строки
 $ sed '3,$d' passwd                                          # удалить с 3 строки всё остальное
 $ sed -i '$d' passwd                                         # удалить последнюю строку в файле
 $ sed -i "s/hello/new/" passwd                               # заменить в самом файле hello на new
