@@ -10,6 +10,7 @@
 * Какие роли есть в Debian
 * С чего начать
 * Портирование
+* Native vs non-native
 
 
 --- GNU (GNU's Not Unix)
@@ -270,6 +271,9 @@ maintaining packages uploaded by sponsors). Non-uploading DDs have the same pack
 Debian Maintainers. Before you apply as a non-uploading DD, you should have a visible and
 significant track record of working inside the project.
 
+Кто делал uploads:
+$ who-uploads <package>
+
 * Mentor - это опытный участник Debian, который помогает новичкам в сообществе разобраться с
 процессами разработки и сопровождения пакетов, а также с другими аспектами участия в проекте.
 
@@ -335,7 +339,9 @@ Debian Maintainer. Однако, если у вас еще нет официал
 мейнтейнерами или под наставничеством, чтобы помочь с поддержкой этих пакетов.
 
 Можно принять простой пакет, поломка которого не расстроит многих людей (wnpp).
-Смотреть: WNPP (Work-Needing and Prospective Packages).
+Смотреть: WNPP (Work-Needing and Prospective Packages). Можно воспользоваться `wnpp-alert`
+утилитой, она подскажет какие пакеты нуждаются в помощи, а `manpage-alert` укажет каких мануалов не
+хватает.
 
 В общем, если вы хотите начать с осиротевших пакетов, найдите одного или нескольких наставников,
 которые помогут вам с этим процессом. Они могут спонсировать ваши изменения и помочь вам внести их в
@@ -344,7 +350,8 @@ Debian Maintainer. Однако, если у вас еще нет официал
 6. Найдите ошибки в системе отслеживания ошибок (BTS - Bug Tracking System) и попробуйте их
 исправить. Это продемонстрирует ваше желание и умение работать с пакетами. Отправка патчей: Если
 вы нашли проблему или улучшение для пакета, создайте патч и отправьте его текущему мейнтейнеру через
-систему отслеживания ошибок (BTS) Debian.
+систему отслеживания ошибок (BTS) Debian. Существуют RC bugs (release-critical bugs), можно
+воспользоваться `rc-alert` утилитой для просмотра списка таких багов.
 
 7. Выберите программное обеспечение, которое вам интересно, и создайте для него пакет. Убедитесь,
 что он соответствует стандартам Debian. Загрузите свои пакеты в mentors.debian.net и попросите
@@ -389,3 +396,23 @@ Debian Maintainer. Однако, если у вас еще нет официал
 
 Обычно Debian имеет несколько архитектур (например, amd64, i386, arm64 и другие), и портирование
 пакета означает его адаптацию для работы на конкретной архитектуре Debian.
+
+
+--- Native vs non-native
+Default to making packages non-native. They are the regular ones. You should only use a native
+Debian package when it is clear that the package would not be useful outside the context of a Debian
+system, and would never be distributed except packaged for Debian or its derivatives. Even if the
+software is currently only available in Debian, if someone could reasonably use the software on
+another distribution or on another operating system, then the package should be non-native. A few
+examples of normal (non-native) packages are: libc6, apache, phpmyadmin. And tools like lintian,
+dpkg and some others are purely developed for Debian, and make no sense being released in another
+distribution; these belong in native Debian packages.
+
+Родной Debian пакет — это пакет программного обеспечения, который официально поддерживается и
+распространяется через репозитории Debian. Эти пакеты проходят строгую проверку и соответствуют
+стандартам качества и безопасности Debian.
+
+Неродной пакет — это пакет, который не входит в официальные репозитории Debian. Он может быть
+получен из сторонних источников, таких как репозитории других дистрибутивов или непосредственно от
+разработчиков программного обеспечения. Неродные пакеты могут не соответствовать стандартам Debian и
+могут требовать дополнительных настроек и проверок безопасности.
