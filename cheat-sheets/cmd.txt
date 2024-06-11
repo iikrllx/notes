@@ -369,6 +369,7 @@ $ apt-get changelog <pack>                # показывает changelog па�
 $ apt edit-sources                        # редактирование sources.list
 
 $ dpkg -I <path_to_deb>                   # информация пакета
+$ dpkg-deb -c <path_to_deb>               # информация пакета (файлы)
 
 $ dpkg --contents <path_to_deb>           # показывает содержимое пакета
 $ dpkg -i <path_do_deb>                   # установка пакета
