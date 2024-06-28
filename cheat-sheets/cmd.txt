@@ -387,6 +387,8 @@ $ dpkg --unpack <path_to_deb>             # делает extract (распако
 $ dpkg --configure <path_to_deb>          # настраивает пакет
 
 # dpkg хранит журнал в /var/log/dpkg.log
+# /var/lib/dpkg/status хранит информацию о пакетах
+# /var/lib/dpkg/info хранит различные скрипты, файлы пакетов
 
 
 --- Журналы dmesg / journalctl
