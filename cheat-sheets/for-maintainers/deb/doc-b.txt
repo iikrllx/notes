@@ -115,7 +115,7 @@ Unable to correct problems, you have held broken packages. Пакеты нужд
 в источниках sources.list)
 
 Решение:
-* Обновить кеш
+* Обновить кэш
   $ apt-get update
   и попробовать установить пакет
 
