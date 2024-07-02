@@ -105,7 +105,8 @@ $ apt-key adv --keyserver pgp.mit.edu --recv-keys ${KEY}
 В /etc/apt/sources.list должен быть тип архива deb-src
 
 $ apt-get source <pack>     # скачать исходники
-$ apt-get build-dep <pack>  # установка Build-Depends зависимостей
+$ dpkg-checkbuilddeps       # проверяет наличие неустановленных Build-Depends из debian/control
+$ apt-get build-dep <pack>  # установка Build-Depends зависимостей из debian/control
 $ apt-cache showsrc <pack>  # так можно посмотреть Build-Depends
 
 Например, изменили что-то в исходниках, затем нужно:

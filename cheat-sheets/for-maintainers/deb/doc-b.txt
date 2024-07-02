@@ -11,7 +11,7 @@
 * Работа с заплатками
 * Переменные
 * debug packages
-* dpkg-reconfigure
+* debconf
 * Скачать разные версии пакета
 * dist-upgrade с исключением
 * Версионность
@@ -25,6 +25,9 @@
 * Проверка пакета
 * Какие пакеты были установлены за день
 * Сравнение версий с помощью dpkg
+* dget
+* debdiff
+* interdiff
 
 
 --- Создание локального репозитория
@@ -342,17 +345,40 @@ $ scp -r path/to/dir .
 Можно включить отладочную информацию и т.д.
 
 
---- dpkg-reconfigure
-Для настройки пакета можно использовать:
-$ dpkg-reconfigure console-setup
-Конфигурация консольного шрифта
+--- debconf
+Инструмент debconf в Debian используется для управления конфигурацией пакетов. Он предоставляет
+централизованную систему для настройки пакетов, которая позволяет пользователям отвечать на вопросы
+конфигурации во время установки или обновления пакетов. Это помогает автоматизировать и упростить
+процесс настройки программного обеспечения.
+
+debconf работает с различными интерфейсами, такими как текстовый интерфейс, графический интерфейс,
+или интерфейс на основе консоли. Он хранит ответы на вопросы конфигурации в базе данных, что
+позволяет избежать повторного запроса той же информации при обновлении или переустановке пакетов.
+
+Например, во время установки данного пакета будут задаваться вопросы, это debconf:
+$ sudo apt-get install postfix
+
+Повторно запустить конфигурацию пакета, откроется debconf:
+$ sudo dpkg-reconfigure tzdata
+
+Посмотреть текущие настройки пакетов:
+$ sudo debconf-get-selections
 
 Для просмотра конфигурации:
 $ debconf-show console-setup
 
+Можно перед установкой пакета подготовить необходимую конфигурацию:
+$ echo "package_name  package_template  select  value" > preseed.txt
+$ sudo debconf-set-selections < preseed.txt
+$ sudo apt-get install package_name -y
+
+Для изменения настроек:
+$ echo "package_name  package_template  select  new_value" > new-selections.txt
+$ sudo debconf-set-selections < new-selections.txt
+
 
 --- Скачать разные версии пакета
-Прописываем:
+Прописать
 deb-src http://deb.debian.org/debian bullseye main contrib non-free
 deb-src http://deb.debian.org/debian buster main contrib non-free
 deb-src http://deb.debian.org/debian stretch main contrib non-free
@@ -648,3 +674,46 @@ $ dpkg --compare-versions 1.0.0 lt 1.0.1
 $ echo $? # 0
 $ dpkg --compare-versions 1.0.2 lt 1.0.1
 $ echo $? # 1
+
+
+--- dget
+Используется для загрузки исходных пакетов (source packages) из репозиториев. Он может загружать
+файлы .dsc и все связанные с ними файлы исходного кода, такие как .orig.tar.gz и .debian.tar.xz. Это
+полезно, когда вы хотите получить исходный код пакета для его изучения, модификации или пересборки.
+
+Скачает все необходимые исходные пакеты:
+$ dget http://deb.debian.org/debian/pool/main/h/hello/hello_2.10-2.dsc
+
+С dpkg-source -x
+$ dget -x http://deb.debian.org/debian/pool/main/h/hello/hello_2.10-2.dsc
+
+Скачает пакет из репозиториев, которые прописаны в /etc/apt/sources.list
+$ dget -u hello
+
+
+--- debdiff
+debdiff — это утилита из пакета devscripts, используемая для сравнения двух Debian-пакетов или их
+исходных пакетов, чтобы увидеть различия между ними. Это может быть полезно для разработчиков и
+мейнтейнеров пакетов, когда нужно понять, что изменилось между двумя версиями пакета.
+
+Сравнение двух бинарных пакетов:
+$ debdiff package1_version1_arch.deb package2_version2_arch.deb
+
+Сравнение двух .dsc файлов:
+$ debdiff package1_version1.dsc package2_version2.dsc
+
+На свой страх и риск:
+$ debdiff source_package_version.dsc binary_package_version_arch.deb
+
+
+--- interdiff
+interdiff — это инструмент, используемый для сравнения двух патчей и вывода различий между ними. Он
+полезен для разработчиков, которые хотят увидеть, как изменился патч между двумя версиями.
+
+Посмотреть изменения между двумя патчами:
+$ interdiff patch1.diff patch2.diff
+
+Еще пример:
+$ git diff commit1 commit2 > patch1.diff
+$ git diff commit2 commit3 > patch2.diff
+$ interdiff patch1.diff patch2.diff
