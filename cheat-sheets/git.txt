@@ -408,11 +408,11 @@ Git не сохраняет права доступа.
 
 
 --- Merge Request и Pull Request
-Github - Pull Request (ведь opensource)
+Pull Request (относится к Open Source продуктам, на открытой платформе типа GitHub).
 Я вот тут ваш продукт усовершенствовал, заберите-ка то, чего я наделал.
 
-GitLab - Merge Request (внутри компании)
-Я вот наделал, хочу свою ветку залить в мастер.
+Merge Request (внутри компании, на закрытой платформе типа GitLab).
+Я вот сделал правки, хочу свою ветку залить к вам в основную (master / main).
 
 
 --- Github vs Bitbucket vs Gitlab
