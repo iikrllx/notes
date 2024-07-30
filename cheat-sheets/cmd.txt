@@ -507,7 +507,9 @@ $ umount -l /path/to
 $ umount -f /path/to
 
 Для более красивого вывода, лучше использовать:
-$ findmnt
+$ findmnt # дерево
+$ findmnt -l # список
+$ findmnt -t ext4 # ФС ext4
 
 
 --- sync
