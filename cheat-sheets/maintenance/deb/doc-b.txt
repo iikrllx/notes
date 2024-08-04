@@ -540,8 +540,20 @@ dh_testdir
 dh_auto_configure
 dh_auto_build
 dh_auto_test
-
 и т.д и т.п.
+
+Важно отметить, что `debian/rules` файл вызывает `./configure`, и там можно указывать определенные
+вызовы данного скрипта, например:
+
+override_dh_auto_configure:
+ ./configure --disable-perl-regexp
+
+или
+
+DEB_CONFIGURE_EXTRA_FLAGS += --disable-perl-regexp
+
+Перед этим можно изучить какие опции поддерживает `configure`:
+$ ./configure --help
 
 
 --- debian/changelog
