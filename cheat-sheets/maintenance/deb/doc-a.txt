@@ -17,6 +17,7 @@
 * Основные пакеты для сопровождающего
 * Подпись пакета
 * dpkg -i *.deb и зависимости
+* lintian ошибки
 
 
 --- Репозиторий
@@ -115,6 +116,9 @@ $ apt-get source <pack>     # скачать исходники
 $ dpkg-checkbuilddeps       # проверяет наличие неустановленных Build-Depends из debian/control
 $ apt-get build-dep <pack>  # установка Build-Depends зависимостей из debian/control
 $ apt-cache showsrc <pack>  # так можно посмотреть Build-Depends
+
+Чтобы скачать бинарный пакет:
+$ apt-get download <pack>
 
 Например, изменили что-то в исходниках, затем нужно:
 $ dch                                  # изменения в changelog
@@ -752,3 +756,29 @@ $ dpkg -i *.deb
 Depends / Recommends и подобные, не устанавливаются автоматически, а устанавливает только сами
 пакеты. Чтобы устанавить локальный пакет вместе с зависимостями:
 $ apt install <pkg>
+
+
+--- lintian ошибки
+- national-encoding
+используется кодировка, отличная от стандартной UTF-8, надо использовать `iconv`.
+
+- groff-message
+все сообщения и документация, которые могут использовать `groff`, соответствуют стандартам форматирования ?
+
+- redundant-installation-prerequisite
+избыточные зависимости, записи, смотреть `debian/control`.
+
+- newer-standards-version
+версия стандарта, указанная в `debian/control`, новее той, которую текущая версия Lintian умеет проверять.
+
+- patch-file-present-but-not-mentioned-in-series
+<file>.patch существует, но в `patches/series` не прописан, лучше прописать, даже если не нужен
+(указать комментарий перед началом ненужного патча).
+
+- unusual-interpreter /usr/bin/python [usr/lib/mc/extfs.d/s3+]
+в пакете используется интерпретатор `/usr/bin/python`, который отсутствует в системе.
+
+- uses-dpkg-database-directly [usr/lib/mc/extfs.d/apt+]
+скрипт напрямую обращается к внутренней базе данных `dpkg` (это может привести к нестабильной работе
+системы), вместо этого лучше использовать официальные источники `dpkg-query`, `apt-cache`,
+`apt-get`, и другие.
