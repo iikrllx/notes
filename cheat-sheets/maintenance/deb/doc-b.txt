@@ -17,7 +17,7 @@
 * Разбор версий
 * eatmydata
 * Репозитории и зеркала
-* Игнорировать рекомендуемые зависимости
+* Игнорировать Recommends, установка Suggests
 * debian/rules по умолчанию
 * debian/changelog
 * Иерархия команд сборки
@@ -523,7 +523,7 @@ $ eatmydata apt-get install <a lot of packages>
 загрузки пакетов.
 
 
---- Игнорировать рекомендуемые зависимости
+--- Игнорировать Recommends, установка Suggests
 Существуют пакеты, которые ставят рекомендуемые пакеты, тем самым загрязняют систему. Например,
 пакет `neofetch` (который вместе с ним устанавливает `w3m`, `w3m-img` и подобные), хотя без этих
 пакетов он так же отлично работает. Можно использовать опцию:
@@ -533,6 +533,9 @@ $ sudo apt-get install neofetch --no-install-recommends
 APT::Install-Recommends "false";
 APT::AutoRemove::RecommendsImportant "false";
 APT::AutoRemove::SuggestsImportant "false";
+
+Установить Suggests можно так:
+$ sudo apt-get install <pkg> --install-suggests
 
 
 --- debian/rules по умолчанию
@@ -703,7 +706,7 @@ $ debdiff старый-пакет.changes новый-пакет.changes
 $ debc <pack>.changes
 
 Можно проверить правильность пакета:
-$ lintian -i -I --show-overrides <pack>.changes
+$ lintian -i -I --show-overrides <pack>.changes --tag-display-limit 0
 
 Вывод:
 

@@ -27,6 +27,7 @@ Forward message                f
 New message                    m
 
 View attachments               v
+Compose mode (append)          a
 Compose to Sender              @
 Save message (to file)         s
 Toggle collapse thread         space, esc + v
