@@ -18,6 +18,7 @@
 * Подпись пакета
 * dpkg -i *.deb и зависимости
 * lintian ошибки
+* Где брать готовые бинарные пакеты
 
 
 --- Репозиторий
@@ -112,13 +113,11 @@ $ apt-key adv --keyserver pgp.mit.edu --recv-keys ${KEY}
 --- Получение исходного пакета
 В `/etc/apt/sources.list` должен быть тип архива `deb-src`.
 
+$ apt-get download <pack>   # скачать бинарный пакет
 $ apt-get source <pack>     # скачать исходники
 $ dpkg-checkbuilddeps       # проверяет наличие неустановленных Build-Depends из debian/control
 $ apt-get build-dep <pack>  # установка Build-Depends зависимостей из debian/control
 $ apt-cache showsrc <pack>  # так можно посмотреть Build-Depends
-
-Чтобы скачать бинарный пакет:
-$ apt-get download <pack>
 
 Например, изменили что-то в исходниках, затем нужно:
 $ dch                                  # изменения в changelog
@@ -782,3 +781,14 @@ $ apt install <pkg>
 скрипт напрямую обращается к внутренней базе данных `dpkg` (это может привести к нестабильной работе
 системы), вместо этого лучше использовать официальные источники `dpkg-query`, `apt-cache`,
 `apt-get`, и другие.
+
+
+--- Где брать готовые бинарные пакеты
+Можно использовать:
+$ apt-get download <pack>
+
+Или собрать самому из исходников.
+
+Или использовать ссылки:
+https://ftp.debian.org/debian/
+https://snapshot.debian.org/
