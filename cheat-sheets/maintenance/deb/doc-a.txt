@@ -801,6 +801,10 @@ $ apt install <pkg>
 - Если поле "Bug" отсутствует, то подразумевается, что патч не был отправлен разработчикам исходного
   проекта.
 
+- debian-news-entry-has-unknown-version [usr/share/doc/mc/NEWS.Debian.gz]
+https://bugs-devel.debian.org/cgi-bin/bugreport.cgi?bug=1021607
+или действительно не совпадает с `debian/changelog`.
+
 
 --- Где брать готовые бинарные пакеты
 Можно использовать:
