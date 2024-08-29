@@ -529,6 +529,24 @@ in another distribution; these belong in native Debian packages.
 Debian. Короче говоря, эта ветвь содержит очень нестабильное, экспериментальное ПО. Данное ПО
 нестабильнее `unstable` ветки.
 
+Коротко и ясно, этапы:
+1. Upstream Author -> Release of a new version.
+2. Debian Maintainer -> Packaging and update -> Source Package.
+3. Source Package -> Source-only upload to the Debian Server -> Unstable.
+4. Source Package -> Autobuilders -> Binary Packages (various architectures).
+... or ...
+5. Source Package -> amd64 binary package built by the maintainer (optional).
+6. Binary Packages -> Testing -> Stable
+
+Autobuilders — это автоматизированные системы, которые компилируют исходные пакеты в бинарные
+пакеты. Они играют ключевую роль в процессе разработки Debian, обеспечивая, что пакеты компилируются
+для всех поддерживаемых архитектур.
+- Когда исходный пакет загружается в ветку `unstable`, Autobuilders автоматически берут этот
+  исходный код и компилируют его на различных архитектурах (например, i386, amd64, arm64 и других).
+- После успешной компиляции бинарные пакеты загружаются обратно в хранилище Debian.
+
+Хранилище Debian расположено на https://ftp.debian.org/debian/.
+
 
 --- Образ Debian (CD/DVD)
 CD(net) и DVD, в чем отличия ?

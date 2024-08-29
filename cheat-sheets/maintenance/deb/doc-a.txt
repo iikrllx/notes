@@ -602,6 +602,7 @@ $ sudo dpkg -i *.deb
 
 --- Разбор схемы разработки (deb-graph.png)
 P.S: Смотреть изображение `deb-graph.png`.
+P.S: Смотреть: gnu.txt -> Схема выпуска релизов Debian
 
 1. Новые версии пакетов заливаются в `unstable (sid)`.
 2. Пакеты мигрируют из `unstable` в `testing` ветку.
