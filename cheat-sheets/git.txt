@@ -29,7 +29,7 @@
 * Долгое клонирование
 * Права доступа файлов
 * Merge Request и Pull Request
-* Github vs Bitbucket vs Gitlab
+* GitHub vs Bitbucket vs GitLab
 * Github traffic
 * README, оформление, источники, разное
 
@@ -408,20 +408,22 @@ Merge Request (внутри компании, на закрытой платфо
 Я вот сделал правки, хочу свою ветку залить к вам в основную (master / main).
 
 
---- Github vs Bitbucket vs Gitlab
+--- GitHub vs Bitbucket vs GitLab
 Все это +- одно и тоже, но есть небольшие различия.
 
-Github - open source инструмент, есть так же закрытые репозитории, но в основном стал популярен
+GitHub - open source инструмент, есть так же закрытые репозитории, но в основном стал популярен
 из-за open source проектов.
 
 Bitbucket - очень редко используется для open source, и часто для закрытых проектов, используется
 разными закрытыми компаниями вместе с Jira.
 
-Gitlab - тоже самое, есть CI/CD, Gitlab - это инструмент, многие компании берут его и разворачивает
-у себя в локальной сети.
+GitLab - тоже самое, есть CI/CD, многие компании берут его и разворачивает у себя в локальной сети
+для закрытого использования
 
-Github: Code -> Review
-Gitlab: Code -> Review -> Build -> Test -> Plan
+Процесс разработки программного обеспечения:
+GitHub: Code -> Review
+GitLab: Code -> Review -> Build -> Test -> Plan
+Bitbucket: Code -> Review -> Build -> Test -> Plan
 
 
 --- Github traffic
