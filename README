@@ -12,8 +12,8 @@
 │   │   ├── deb
 │   │   │   ├── deb-graph.png
 │   │   │   ├── doc-a.txt
-│   │   │   └── doc-b.txt
-│   │   ├── gnu.txt
+│   │   │   ├── doc-b.txt
+│   │   │   └── gnu.txt
 │   │   └── rhel
 │   │       └── doc.txt
 │   ├── make.txt
