@@ -93,7 +93,7 @@ FROM debian
 ...
 
 И затем собрать образ операционной системы:
-$docker build -t my-debian-image .
+$ docker build -t my-debian-image .
 
 А затем запустить его в контейнере:
 $ docker run -it my-debian-image
