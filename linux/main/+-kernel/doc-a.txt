@@ -1,9 +1,5 @@
 Темы:
 * Сборка ядра
-* scripts/kconfig/conf
-* Отладка conf
-* Ошибки conf
-* Kconfig
 * Черный экран на этапе инициализации (initramfs)
 * Поймать ошибки initrd (vbox)
 * Откуда берется /root и немного про initrd
@@ -16,6 +12,7 @@
 * Call Trace
 * sysrq + debug
 * Отладка ядра
+* Что такое pam
 
 Документация: linux/Documentation
 
@@ -66,148 +63,6 @@ Kconfig предоставляет пользователям множество
 
 Можно увидеть `<file>.y` файлы, это тоже исходные файлы,
 они НЕ компилируются, а превращаются в С код с помощью Bison / Flex.
-
-
---- scripts/kconfig/conf
-The first step reads the Kconfig file under source root to construct an initial configuration
-database; then it updates the initial database by reading an existing configuration file
-
-$ fakeroot dpkg-buildpackage -b -uc
-
--> fakeroot debian/rules clean
-Создаются файлы debian окружения (без них сборка не сможет запуститься).
-
--> fakeroot debian/rules build
-Создает `debian/build/build-$(flavour)` сборка ядра происходит в этом build окружении.
-Запускает все `debian/rules.d/*`.
-
-Список flavours можно посмотреть в `debian.master/rules.d/amd64.mk`.
-
-Можно заметить, что в одном из `rules.d/` идет:
-make O=/home/user/git/aaaaa/linux/debian/build/build-generic syncconfig prepare scripts
-
-Вызывается `scripts/kconfig/Makefile`.
-Здесь лежат основные программы, например `conf.c`, `confdata.c`,
-они собираются, затем можно увидеть, что `conf` вызывается так:
--> scripts/kconfig/conf --syncconfig Kconfig
-`syncconfig` меняет `.config` файл.
-
-
---- Отладка conf
-В главное `Makefile` добавить отладочные символы в `KBUILD_USERCFLAGS`.
-
-$ fakeroot debian/rules clean
-$ fakeroot debian/rules build
-Во время нажать CTRL + C
-
-$ cd debian/build/build-generic/
-$ srctree=/home/user/git/aaaaa/linux CC=gcc LD=ld SRCARCH=x86 scripts/kconfig/conf --listnewconfig Kconfig
-
-В `main.gdb`:
-set env srctree=/home/user/git/aaaaa/linux
-set env CC=gcc
-set env LD=ld
-set env SRCARCH=x86
-
-$ gdb scripts/kconfig/conf --command main.gdb
-
-
---- Ошибки conf
-/boot/config-5.10.0-13-amd64:3591:warning: symbol value 'm' invalid for CHELSIO_IPSEC_INLINE
-Несоответствие типов, в дефолтном файле описано значение 'm', хотя в нашем текущем Kconfig
-описано bool (y/n), для того чтобы исправить ошибку, нужно прописать tristate (y/n/m)
-
-override: reassigning to symbol DEBUG_VIRTUAL
-означает, что указан несколько раз DEBUG_VIRTUAL
-
-override: M686 changes choice state
-принудительно переопределяет состояние выбора для M686
-Depends on: <choice>
-
-
---- Kconfig
-Menu entries, пример:
-config MODVERSIONS
-      bool "Set version information on all module symbols"
-      depends on MODULES
-      help
-        Usually, modules have to be recompiled whenever you switch to a new
-        kernel.  ...
-
-Ошибка - security/Kconfig:256:warning: prompt redefined
-choice
-	prompt "First legacy 'major LSM' to be initialized"
-	prompt "Default security module"
-
-prompt не должен указываться несколько раз, нужно убрать второй.
-
-Каждый config option должен иметь тип (type) - bool/tristate/string ...
-* string to save string data (форма в которую нужно ввести данные)
-* bool to save the bool value (y/n or commented string in config)
-* tristate (y/n/m/commented)
-
-Значения по умолчанию.
-Может быть несколько default записей, самая первая - работает (в приоритете)
-Если видно default y значит в меню будет Y/n? (автоматически включена)
-
-В данном случае в TUI интерфейсе будет стоять галочка на "show data only for current user"
-config SHOW_ONLY_CURRENT_USER
-    bool "show data only for current user"
-    default y
-    help
-      script will get data only for currewnt user
-
-Для драйверов значение по-умолчанию ставится 'default n'.
-Значение по умолчанию назначается только в том случае, если пользователь не установил
-другое значение (через приглашение к вводу).
-
-Не понимаю эту мысль, в ней заложена какая-то тайна ...
-Every entry has its own dependencies.
-These dependencies are used to determine the visibility of an entry.
-Any child entry is only visible if its parent entry is also visible.
-
-select нужно использовать с осторожностью. он принудительно задает значение опции
-без обращения к зависимостям (это относится к reverse dependencies).
-
-prompt "string" работает меню с ---> переходом и внутри предлагаются различные варианты
-например варианты bool "string", это просто галочка (y/n) включаешь, выключаешь
-я не вижу разницы между bool "string" и prompt "string"
-
-config / menuconfig / choice/endchoice / commend / menu/endmenu и другие
-это касается TUI интерфейса и как будут разворачиваться элементы
-
-Как работает depends on, есть два конфига: SELECT_DESTINATION_TTY / SELECT_DESTINATION_FILE
-если пользователь выбрал SELECT_DESTINATION_FILE у него появляется зависимость, которую нужно
-удовлетворить, эта зависимость-конфиг SELECT_DESTINATION_FILE_FILENAME там значение по-умолчанию
-стоит "last.log" (поэтому удовлетворять особо нечего), но можно и вписать свое
-эта зависимость-конфиг является NEW конфигом для .config. Говоря проще, чтобы эта опция
-была настроена, ее зависимости должны быть удовлетворены.
-
-choice SELECT_DESTINATION
-    prompt "Select data destination"
-    default DESTINATION_TTY
-config SELECT_DESTINATION_TTY
-    bool "show data in console"
-config SELECT_DESTINATION_FILE
-    bool "save data to file"
-endchoice
-
-config SELECT_DESTINATION_FILE_FILENAME
-    string "destination file"
-    depends on SELECT_DESTINATION_FILE
-    default "last.log"
-    help
-      Write destination file with relative or full path
-
-Еще один пример:
-config MODULES
-    bool "Enable loadable module support"
-
-config MODVERSIONS
-    bool "Set version information on all module symbols"
-    depends on MODULES
-
-MODVERSIONS виден только в том случае, если MODULES отличается от =n
 
 
 --- Черный экран на этапе инициализации (initramfs)
@@ -433,3 +288,16 @@ $ echo l > /proc/sysrq-trigger
 
 Позиция Торвалдса: не стоит пошагово отлаживать ядро, только трассировки и профайлинг Conclusion:
 debugging the kernel via debugger that is running on that same machine is impossible.
+
+
+--- Что такое pam
+Модули аутентификации.
+API который осуществляет проверку подлинности пользователя.
+Раньше проверку осуществляла утилита `login`, которая проверяла
+данные введенные пользователем с `/etc/passwd` (сейчас это делает `/etc/shadow`),
+сейчас же просто передает данные PAM, а он их проверяет с помощью
+различных алгоритмов и возвращает ответ.
+
+Настройка PAM осуществляется с помощью `/etc/pam.d/<name_program>`.
+В этих файлах указано, что для успешной аутентификации пользователь
+должен пройти через все указанные модули, модуль указан сначала, например `auth`.
