@@ -32,7 +32,6 @@
 * readonly
 * read
 * dirname & basename
-* gettext
 * pushd, popd, dirs
 * Блокировка файла
 * alias и unalias
@@ -448,11 +447,6 @@ $ read -s -p "Press any key to continue..." -n 1 dummy
 --- dirname & basename
 $ dirname /usr/local/bin/file.sh   # /usr/local/bin
 $ basename /usr/local/bin/file.sh  # file.sh
-
-
---- gettext
-С помощью `gettext` происходит трансляция языка в язык пользователя (зависит от переменной LANG)
-Необходимо иметь файл с переводом `*.po`: $ echo $(gettext "# Testing correct Acl RWX mechanism")
 
 
 --- pushd, popd, dirs

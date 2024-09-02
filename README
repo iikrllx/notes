@@ -9,11 +9,13 @@
 │   ├── fail2ban.txt
 │   ├── git.txt
 │   ├── maintenance
-│   │   ├── deb
+│   │   ├── debian
 │   │   │   ├── deb-graph.png
 │   │   │   ├── doc-a.txt
 │   │   │   ├── doc-b.txt
-│   │   │   └── gnu.txt
+│   │   │   ├── gnu.txt
+│   │   │   └── trans
+│   │   │       └── doc.txt
 │   │   └── rhel
 │   │       └── doc.txt
 │   ├── make.txt
@@ -219,4 +221,4 @@
 ├── README
 └── README.md
 
-43 directories, 177 files
+44 directories, 178 files

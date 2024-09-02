@@ -1,0 +1,91 @@
+Темы:
+* gettext
+* С чего начать перевод пакета
+* Перевод сайта Debian
+
+
+--- gettext
+$ apt-get install gettext
+
+Пакет `gettext` используется для интернационализации (i18n) и локализации (l10n) программного
+обеспечения. Он предоставляет средства для перевода строк текста в приложениях, что позволяет
+разработчикам создавать программы, которые могут отображать интерфейс на различных языках без
+изменения исходного кода.
+
+1. В исходном коде программы строки, которые должны быть переведены, оборачиваются в специальные
+функции, такие как `gettext()` или `_()`. Например:
+
+	#include <stdio.h>
+	#include <libintl.h>
+	#include <locale.h>
+
+	#define _(STRING) gettext(STRING)
+
+	int main() {
+	    setlocale(LC_ALL, "");
+	    bindtextdomain("myprogram", "/usr/share/locale");
+	    textdomain("myprogram");
+
+	    // если локально в проекте
+	    //bindtextdomain("myprogram", "locale");
+
+	    printf(_("Test message\n"));
+	    return 0;
+	}
+
+2. Нужно использовать `xgettext`, который создаст `messages.pot` файл (извлечь все строки,
+подлежащие переводу).
+
+$ xgettext -k_ file.c
+
+3. Файл `messages.pot` переименовывается в файл для целевого языка, например `ru.po`, в этом
+файле уже можно добавлять переводы строк и изменить шапку файла (описание).
+
+$ mv messages.pot ru.po
+
+	msgid "Hello, world!"
+	msgstr "Привет, мир!"
+
+4. Компиляция `ru.po` в бинарный файл.
+
+$ msgfmt ru.po -o myprogram.mo
+$ mv myprogram.po /usr/share/locale/ru/LC_MESSAGES
+
+`myprogram.mo` - это бинарный файл, который содержит переводы для вашего приложения. Когда ваша
+программа запускается, она загружает этот файл в память, чтобы использовать переводы строк на нужном
+языке.
+
+5. Запустить бинарный файл.
+
+$ LANGUAGE=ru_RU.UTF-8 ./a.out
+Тест сообщение
+
+В выводе `strace` можно увидеть, что происходит чтение различных файлов из
+`/usr/share/locale/ru/LC_MESSAGES`
+
+
+--- С чего начать перевод пакета
+1. Почтовая рассылка: https://lists.debian.org/debian-l10n-russian/ - обсуждаются вопросы перевода.
+2. Выбрать пакет для перевода: https://www.debian.org/international/l10n/po/ru
+3. Добавить перевод и отправить патч, можно в виде Merge Request, либо в виде патча для BTS (reportbug)
+(важность: wishlist, тэги: l10n, patch) и передать инструкции, которые нужно выполнить для включения
+в пакет. (!!!) Но лучше придерживаться `reportbug`.
+
+Для темы тикета можно использовать такой паттерн:
+Subject: [INTL:ru] Translation into Russian for the package <package>
+
+Перед создание тикета, необходимо отправить пачт в список рассылки для проверки с использованием
+псевдоссылок: https://www.debian.org/international/l10n/pseudo-urls
+
+
+--- Перевод сайта Debian
+Полезная информация:
+https://www.debian.org/devel/website/translating
+https://www.debian.org/devel/website/using_git
+
+$ git clone https://salsa.debian.org/webmaster-team/webwml
+Сделать изменения + создать Merge Request, а так же сообщить об этом в рассылке
+`debian-l10n-russian@lists.debian.org` и `debian-www@lists.debian.org`.
+
+Если нужен полный доступ на запись, необходимо добавить SSH ключи и попросить доступа к репозиторию
+через рассылку `debian-www@lists.debian.org`. Необходимо немного рассказать о себе, заинтересовать.
