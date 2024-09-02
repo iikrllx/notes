@@ -74,7 +74,7 @@ $ LANGUAGE=ru_RU.UTF-8 ./a.out
 Для темы тикета можно использовать такой паттерн:
 Subject: [INTL:ru] Translation into Russian for the package <package>
 
-Перед создание тикета, необходимо отправить пачт в список рассылки для проверки с использованием
+Перед созданием тикета, необходимо отправить пачт в список рассылки для проверки с использованием
 псевдоссылок: https://www.debian.org/international/l10n/pseudo-urls
 
 
