@@ -6,7 +6,6 @@
 │   │   └── example
 │   │       ├── Dockerfile
 │   │       └── file.c
-│   ├── fail2ban.txt
 │   ├── git.txt
 │   ├── maintenance
 │   │   ├── debian
@@ -22,6 +21,7 @@
 │   ├── net.txt
 │   ├── regexp.txt
 │   └── tools
+│       ├── fail2ban.txt
 │       ├── gdb.txt
 │       ├── hotkeys
 │       │   ├── aptitude.txt
