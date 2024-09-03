@@ -205,7 +205,7 @@ $ patch -p1 -R < ../project-patch
 $ diff -c a b
 
 Показать разницу построчно:
-$ sdiff a b
+$ sdiff a b | less
 
 
 --- ISO
@@ -248,6 +248,7 @@ $ echo " space" | tr -d [:space:]                            # удаляет п
 $ echo "1 please 2 remove 3 all 4 digits" | tr -d [:digit:]  # удаляет все цифры
 $ cat /etc/passwd | tr ":" " "                               # заменить ":" на " "
 $ cat /dev/urandom | tr -dc '0-9'                            # -c бинарное представляет в читабельном виде
+$ cat /etc/passwd | tr [:lower:] [:upper:]                   # из lowercase в uppercase
 
 sed:
 $ sed 's/user/AAA/' /etc/passwd                              # меняет user на AAA
