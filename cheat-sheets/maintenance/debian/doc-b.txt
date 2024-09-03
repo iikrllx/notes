@@ -202,9 +202,6 @@ $ sudo chown -R root:root .
 но можно этого и не делать:
 $ fakeroot dpkg-deb --build <name-of-package>
 
-Затем проверяем прочность / целостность пакета:
-$ lintian package.deb
-
 
 --- pbuilder и сборка пакета
 $ apt-get install pbuilder
@@ -719,6 +716,7 @@ $ debc <pack>.changes
 
 Можно проверить правильность пакета:
 $ lintian -i -I --show-overrides <pack>.changes --tag-display-limit 0
+$ lintian -i -I --show-overrides <pack>_source.changes --tag-display-limit 0
 
 Вывод:
 
@@ -867,6 +865,7 @@ $ duck -r <path>
 
 $ dpkg-depcheck -d <build-command>
 $ dpkg-depcheck -d dpkg-buildpackage -us -uc
+$ dpkg-depcheck -a dpkg-buildpackage -us -uc
 Помогает определить, какие пакеты необходимы для сборки другого пакета, анализируя его поведение при
 сборке. Выполняет "strace" (слежение за системными вызовами) за процессом сборки и на основе
 этого выводит список зависимостей.
@@ -877,6 +876,15 @@ $ dpkg-depcheck -d dpkg-buildpackage -us -uc
 пакеты и в поле `Recommends` (но не дублировать).
 
 А еще можно прикрутить `dpkg-depcheck` к `pbuilder`.
+
+Можно использовать `lsof` для того, чтобы понять какие библиотеки, файлы использует пакет/программа,
+например, в одном терминале запустить программу:
+$ mc
+
+А в другом терминале:
+$ lsof -c mc
+
+Отследит открытые файлы и библиотеки, которые использует.
 
 $ piuparts
 (смотреть `piuparts`).
