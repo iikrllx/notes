@@ -365,6 +365,9 @@ $ apt-cache show <pack>      # описание пакета (control)
 $ apt-cache showsrc <pack>   # описание исходника (dsc - debian source control)
 $ apt-cache madison <pack>   # доступные версии
 
+Выводит ссылки на исходные пакеты из репозитория sid без скачивания:
+$ apt-get -t sid --print-uris --only-source source <pkg>
+
 $ apt search <pack>          # поиск пакета
 $ apt serch <pack> | less    # поиск пакета
 $ apt list                   # все доступные пакеты
