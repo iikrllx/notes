@@ -66,7 +66,7 @@ $ LANGUAGE=ru_RU.UTF-8 ./a.out
 
 
 --- С чего начать перевод пакета
-1. Почтовая рассылка: https://lists.debian.org/debian-l10n-russian/ - обсуждаются вопросы перевода.
+1. Почтовая рассылка: `debian-l10n-russian@lists.debian.org` - обсуждаются вопросы перевода.
 2. Выбрать пакет для перевода: https://www.debian.org/international/l10n/po/ru
 3. Добавить перевод и отправить патч, можно в виде Merge Request, либо в виде патча для BTS (reportbug)
 (важность: wishlist, тэги: l10n, patch) и передать инструкции, которые нужно выполнить для включения
@@ -89,7 +89,8 @@ $ git clone https://salsa.debian.org/webmaster-team/webwml
 `debian-l10n-russian@lists.debian.org` и `debian-www@lists.debian.org`.
 
 Если нужен полный доступ на запись, необходимо добавить SSH ключи и попросить доступа к репозиторию
-через рассылку `debian-www@lists.debian.org`. Необходимо немного рассказать о себе, заинтересовать.
+через рассылку `debian-www@lists.debian.org`. Необходимо немного рассказать о себе, заинтересовать,
+за какие компоненты сайта вы будете отвечать ? и т.д.
 
 
 --- Перевод man страниц

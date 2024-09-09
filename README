@@ -157,7 +157,6 @@
 │       │   ├── unsigned-signed-char.c
 │       │   └── void.c
 │       ├── features.txt
-│       ├── lkm.txt
 │       └── modules
 │           ├── 1
 │           │   ├── hello-1.c
@@ -194,7 +193,8 @@
 │   │   ├── fhs.txt
 │   │   ├── +-kernel
 │   │   │   ├── doc-a.txt
-│   │   │   └── doc-b.txt
+│   │   │   ├── doc-b.txt
+│   │   │   └── lkm.txt
 │   │   ├── memory
 │   │   │   ├── mem.txt
 │   │   │   └── pages.png
