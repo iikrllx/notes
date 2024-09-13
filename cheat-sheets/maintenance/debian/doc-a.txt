@@ -20,6 +20,7 @@
 * lintian ошибки
 * Где брать готовые бинарные пакеты
 * piuparts
+* debian/rules with verbose
 
 
 --- Репозиторий
@@ -185,6 +186,11 @@ debian/control                   # текстовый файл (описание
 хранятся в этом же формате.
 
 debian/changelog                 # изменения в проекте
+
+debian/alternatives              # альтернативная версия
+
+Некоторые терминальные пакеты используют это ключевое слово как ссылку на свой терминал, например,
+`x-terminal-emulator` -> `xfce4-terminal`, такое можно реализовать с помощью `debian/alternatives`.
 
 debian/format                    # формат пакета, современный формат 3.0
                                  # 3.0 (native) - для родных Debian пакетов (lintian, dpkg, etc.)
@@ -422,6 +428,10 @@ Provides     # Указывает на виртуальные пакеты, ко
              # использоваться другими пакетами как зависимости.
              # Пакеты Apache / Nginx предоставляют возможность демона httpd (виртуальный пакет).
              # Например, у `mc` есть `Provides: mcedit` (виртуальный пакет).
+
+Процесс сборки пакета не требует привилегий суперпользователя (root). Это упрощает процесс сборки и
+делает его более безопасным, но это не касается fakeroot:
+Rules-Requires-Root: no
 
 Зависимости сборки: Build-Depends, Build-Conflicts
 Эти зависимости должны быть удовлетворены в тот момент, когда `debian/rules` данного пакета
@@ -865,3 +875,9 @@ $ piuparts --schroot sid-amd64-sbuild <package>
 
 Тестирование пакета в конкретном .tgz:
 $ piuparts --basetgz=/path/to/my/tarball.tgz <package>
+
+
+--- debian/rules with verbose
+$ export DH_VERBOSE=1
+$ debian/rules clean
+$ unset DH_VERBOSE
