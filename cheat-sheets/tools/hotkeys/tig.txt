@@ -13,3 +13,7 @@ Q - close all
 e - vim edit
 g - grep
 D - сокращает дату
+
+Scrolling:
+ctrl-d
+ctrl-u
