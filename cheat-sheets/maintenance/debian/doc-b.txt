@@ -370,7 +370,7 @@ $ DEBIAN_FRONTEND=noninteractive apt-get -y install $pack
 
 Часто встречается в `debian/rules`:
 export DEB_LDFLAGS_MAINT_APPEND=-Wl,-O1 -Wl,-z,defs
-DEB_LDFLAGS_MAINT_APPEND= -Wl,--as-needed
+DEB_LDFLAGS_MAINT_APPEND=-Wl,--as-needed
 Добавляет дополнительные флаги для компоновщика (linker).
 
 Префикс `-Wl,` используется для передачи последующих параметров непосредственно компоновщику `ld`.

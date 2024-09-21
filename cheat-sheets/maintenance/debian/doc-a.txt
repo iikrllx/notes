@@ -21,6 +21,7 @@
 * Где брать готовые бинарные пакеты
 * piuparts
 * debian/rules with verbose
+* dpkg-buildflags
 
 
 --- Репозиторий
@@ -883,3 +884,82 @@ $ piuparts --basetgz=/path/to/my/tarball.tgz <package>
 $ export DH_VERBOSE=1
 $ debian/rules clean
 $ unset DH_VERBOSE
+
+
+--- dpkg-buildflags
+Используется для извлечения информации о флагах компиляции и сборки, которые должны использоваться
+при построении пакетов. Она помогает обеспечить единообразие и соответствие стандартам безопасности
+и оптимизации во всех пакетах, собираемых для Debian и производных систем, таких как Ubuntu.
+
+`dpkg-buildflags` позволяет получить список флагов, которые используются по умолчанию для компиляции
+и линковки. Это включает в себя такие флаги, как `CFLAGS`, `LDFLAGS`, `CPPFLAGS` и другие.
+
+Можно изменять или добавлять собственные флаги, чтобы адаптировать процесс сборки под конкретные
+нужды.
+
+Использование стандартных флагов помогает улучшить безопасность и производительность, так как они
+включают в себя современные подходы к защите и оптимизации кода.
+
+$ dpkg-buildflags --get CFLAGS
+$ dpkg-buildflags --export
+
+Пользователь может переопределять или дополнять флаги с помощью переменных окружения, таких как
+`DEB_CFLAGS_APPEND`. Например, чтобы добавить флаг к `CFLAGS`:
+export DEB_CFLAGS_APPEND="-O3"
+
+Обычно `dpkg-buildflags` вызывается из сценариев (`debian/rules`) при сборке пакета. Это
+обеспечивает автоматическое использование правильных флагов.
+
+Например:
+
+CFLAGS := $(shell dpkg-buildflags --get CFLAGS)
+LDFLAGS := $(shell dpkg-buildflags --get LDFLAGS)
+
+build:
+    gcc $(CFLAGS) -o myapp myapp.c $(LDFLAGS)
+
+Вывод `dpkg-buildflags`, например:
+ASFLAGS=
+CFLAGS=-g -O2 -ffile-prefix-map=/home/kory/sources/sid-strace/strace-6.8=. -fstack-protector-strong -Wformat -Werror=format-security
+CPPFLAGS=-Wdate-time -D_FORTIFY_SOURCE=2
+CXXFLAGS=-g -O2 -ffile-prefix-map=/home/kory/sources/sid-strace/strace-6.8=. -fstack-protector-strong -Wformat -Werror=format-security
+DFLAGS=-frelease
+FCFLAGS=-g -O2 -ffile-prefix-map=/home/kory/sources/sid-strace/strace-6.8=. -fstack-protector-strong
+FFLAGS=-g -O2 -ffile-prefix-map=/home/kory/sources/sid-strace/strace-6.8=. -fstack-protector-strong
+GCJFLAGS=-g -O2 -ffile-prefix-map=/home/kory/sources/sid-strace/strace-6.8=. -fstack-protector-strong
+LDFLAGS=-Wl,-z,relro
+OBJCFLAGS=-g -O2 -ffile-prefix-map=/home/kory/sources/sid-strace/strace-6.8=. -fstack-protector-strong -Wformat -Werror=format-security
+OBJCXXFLAGS=-g -O2 -ffile-prefix-map=/home/kory/sources/sid-strace/strace-6.8=. -fstack-protector-strong -Wformat -Werror=format-security
+
+-g включает отладочную информацию
+
+-O2 оптимизация для скорости
+
+-fstack-protector-strong защита стека от атак переполнения буфера
+Когда буфер (например, массив) в функции переполняется, это может позволить злоумышленнику изменить
+содержимое стека, включая возвратные адреса, что может привести к выполнению произвольного кода.
+
+-Wformat в компиляторе GCC и подобных используется для включения предупреждений, связанных с
+форматированием строк, особенно в функции `printf` и аналогичных. Эти предупреждения помогают
+обнаружить потенциальные ошибки в использовании спецификаторов формата. Например, неправильное
+использование спецификаторов, или неверное кол-во и т.д. GCC предупредит об этом.
+
+-Werror=format-security преобразует предупреждения о безопасности форматов в ошибки.
+
+-Wdate-time используется для предупреждения о использовании устаревших макросов даты и времени,
+таких как `__DATE__`, `__TIME__` и `__TIMESTAMP__`. Эти макросы усложняют отладку и тестирование и
+т.д, короче, нежелательны в некоторых ситуациях.
+
+-D_FORTIFY_SOURCE=2 используется, чтобы повысить безопасность приложений, предотвращая потенциальные
+уязвимости, которые могут быть использованы для выполнения произвольного кода через переполнение
+буфера или другие подобные атаки. Он совместим с оптимизациями уровня `-O2` и выше. Это делается
+путем добавления дополнительных проверок к функциям, таким как `sprintf`, `strcpy`, `memcpy` и
+другим.
+
+_FORTIFY_SOURCE=1 менее строгий
+_FORTIFY_SOURCE=2 более строгий
+
+-Wl,-z,relro эта опция линкера активирует механизм "Read-Only Relocation" (RELRO). RELRO защищает
+таблицы перемещений и другие секции памяти от изменений во время выполнения. Это делает более
+сложным эксплуатацию некоторых типов уязвимостей, таких как переполнение буфера. Существует
+несколько уровней защиты RELRO, и данная опция активирует базовый уровень защиты.
