@@ -98,6 +98,10 @@ $ git clone https://salsa.debian.org/webmaster-team/webwml
 https://www.debian.org/devel/website/translating
 https://www.debian.org/devel/website/using_git
 
+Полезные инструменты:
+`./check_trans.pl russian/`
+`./check_links.pl russian/`
+
 
 --- Перевод man страниц (manpages-l10n)
 $ git clone https://salsa.debian.org/manpages-l10n-team/manpages-l10n
