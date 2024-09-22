@@ -828,6 +828,15 @@ $ apt install <pkg>
 https://bugs-devel.debian.org/cgi-bin/bugreport.cgi?bug=1021607
 или действительно не совпадает с `debian/changelog`.
 
+- hardening-no-bindnow usr/sbin/icmpinfo
+в `debian/rules` необходимо добавить `export DEB_BUILD_MAINT_OPTIONS = hardening=+all`.
+
+- hardening-no-relro usr/sbin/icmpinfo
+потеряли в `debian/rules` (-Wl,-z,relro)
+
+В целом hardening-* сообщения связаны с безопасностью флагов и можно экспортировать
+`dpkg-buildflags` и проанализировать вывод `blhc`.
+
 
 --- Где брать готовые бинарные пакеты
 Можно использовать:
@@ -918,6 +927,19 @@ LDFLAGS := $(shell dpkg-buildflags --get LDFLAGS)
 
 build:
     gcc $(CFLAGS) -o myapp myapp.c $(LDFLAGS)
+
+Тонкий момент, в чем разница между CFLAGS = ... CFLAGS := ... CFLAGS += ... ?
+
+(ленивое присваивание)
+= Если другие переменные, используемые в присваивании, изменяются позже, это повлияет на значение.
+
+(жадное присваивание)
+:= Оно остаётся неизменным, даже если другие переменные, используемые в присваивании, изменяются
+позже.
+
+(добавление к переменной)
++= Добавляет новое значение к уже существующему значению переменной, полезно для накапливания
+значений в списке.
 
 Вывод `dpkg-buildflags`, например:
 ASFLAGS=
