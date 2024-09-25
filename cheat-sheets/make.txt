@@ -362,9 +362,10 @@ $ apt-file list xterm
 Если в man написанно 'Link with -lrt' значит будет использоваться librt.so библиотека.
 
 Выводит shared-библиотеки используемые исполняемым файлом:
-$ ldd ./a.out    # print shared object dependencies
-$ ldd -v ./a.out # подробный вывод
-$ ldconfig -p    # показывает cache список (имеющиеся либы)
+$ libtree ./a.out  # print shared object dependencies (tree)
+$ ldd ./a.out      # print shared object dependencies
+$ ldd -v ./a.out   # подробный вывод
+$ ldconfig -p      # показывает cache список (имеющиеся либы)
 
 
 --- LD_PRELOAD, ld.so, strace
