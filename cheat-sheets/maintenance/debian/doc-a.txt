@@ -22,6 +22,7 @@
 * piuparts
 * debian/rules with verbose
 * dpkg-buildflags
+* hardening=+all
 * hardening-check
 
 
@@ -928,6 +929,9 @@ LDFLAGS := $(shell dpkg-buildflags --get LDFLAGS)
 build:
     gcc $(CFLAGS) -o myapp myapp.c $(LDFLAGS)
 
+или
+include /usr/share/dpkg/buildflags.mk
+
 Тонкий момент, в чем разница между CFLAGS = ... CFLAGS := ... CFLAGS += ... ?
 
 (ленивое присваивание)
@@ -986,6 +990,22 @@ _FORTIFY_SOURCE=2 более строгий
 таблицы перемещений и другие секции памяти от изменений во время выполнения. Это делает более
 сложным эксплуатацию некоторых типов уязвимостей, таких как переполнение буфера. Существует
 несколько уровней защиты RELRO, и данная опция активирует базовый уровень защиты.
+
+Есть еще PIE и BINDNOW - если кратко, повышают безопасность =)
+
+
+--- hardening=+all
+export DEB_BUILD_MAINT_OPTIONS = hardening=+all
+Please enable "PIE" and "BINDNOW" in the build. The "all" option enables "PIE" and "BINDNOW".
+
+Each hardening feature can be enabled and disabled in the DEB_BUILD_MAINT_OPTIONS environment
+variable's hardening value with the "+" and "-" modifier. For example, to enable the "pie" feature
+and disable the "fortify" feature you can do this in `debian/rules`:
+export DEB_BUILD_MAINT_OPTIONS=hardening=+pie,-fortify
+
+Since Debian 11 (bullseye) the line with "Wl,--as-needed" is no longer needed, as on GNU/* systems
+this flag is now passed by default to the linker by gcc. Явное указание больше НЕ требуется:
+export DEB_LDFLAGS_MAINT_APPEND= -Wl,--as-needed
 
 
 --- hardening-check
