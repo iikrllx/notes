@@ -303,6 +303,7 @@ $ find . -name "*.i686.rpm" -exec mv {} ../ww/ \; # переместить вс�
 tar:
 $ tar -cvzf hello-2.10.tar.gz hello-2.10
 $ tar -cvJf hello-2.10.tar.xz hello-2.10
+$ tar -cvjf hello-2.10.tar.bz2 hello-2.10
 $ tar -xvzf hello-2.10.tar.gz
 -c # создает
 -x # наоборот
@@ -345,6 +346,7 @@ $ head -c 8                           # 8 символов (в строку) $ c
 gzip:
 $ gzip file                           # сжатие
 $ gzip -l file.gz                     # содержимое архива
+$ zcat file.gz                        # просмотр сжатого файла
 
 gunzip:
 $ gunzip file.gz                      # наоборот
