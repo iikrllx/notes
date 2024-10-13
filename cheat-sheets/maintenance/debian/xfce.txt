@@ -1,0 +1,116 @@
+Темы:
+* xfce и lightdm
+* Значения xfce пакетов
+
+
+--- xfce и lightdm
+Xfce - это графическая среда рабочего стола, которая предоставляет пользователю интерфейс для
+взаимодействия с операционной системой. Она включает в себя панель задач, менеджер окон, настройки
+рабочего стола и другие инструменты для управления рабочим пространством.
+
+LightDM, с другой стороны, является дисплейным менеджером для графической среды X. Он отвечает за
+отображение окна входа пользователя при запуске системы и управление процессом аутентификации.
+LightDM позволяет выбирать пользователю, какую графическую среду или сеанс запускать при входе в
+систему.
+
+Таким образом, Xfce - это графическая среда рабочего стола, а LightDM - это дисплейный менеджер,
+обеспечивающий отображение окна входа пользователя и управление процессом аутентификации.
+
+
+--- Значения xfce пакетов
+Существует множество пакетов с тегом:
+Maintainer: Debian Xfce Maintainers <debian-xfce@lists.debian.org>
+На debian-xfce@lists.debian.org жетательно подписаться.
+
+> exo-utils
+Утилиты для библиотеки Exo, используемой в Xfce.
+
+> gigolo
+Программа для управления соединениями с удалёнными файловыми системами.
+
+> gir1.2-garcon-1.0, gir1.2-garcongtk-1.0, gir1.2-libxfce4panel-2.0, gir1.2-libxfce4ui-2.0,
+> gir1.2-libxfce4util-1.0, gir1.2-lightdm-1, gir1.2-thunarx-3.0, gir1.2-xfconf-0
+Это пакеты GObject Introspection, предоставляющие API для различных библиотек Xfce, таких как
+Garcon, Thunarx и другие.
+
+> libexo-2-0, libexo-2-dev, libexo-common
+Библиотеки Exo, обеспечивающие расширенные возможности для Xfce, такие как работа с окнами и
+управление файлами.
+
+> libgarcon-1-0, libgarcon-1-0-dev, libgarcon-1-dev, libgarcon-common, libgarcon-gtk3-1-0,
+> libgarcon-gtk3-1-dev
+Библиотеки для работы с меню в Xfce.
+
+> liblightdm-gobject-1-0, liblightdm-gobject-dev, liblightdm-qt5-3-0, liblightdm-qt5-3-dev
+Библиотеки, относящиеся к дисплейному менеджеру LightDM.
+
+> libmousepad0, libmousepad-dev
+Библиотеки для текстового редактора Mousepad.
+
+> libthunarx-3-0, libthunarx-3-dev
+Расширения для файлового менеджера Thunar.
+
+> libtumbler-1-0, libtumbler-1-dev
+Библиотеки для работы с превью в файловом менеджере.
+
+> libxfce4panel-2.0-4, libxfce4panel-2.0-dev, libxfce4ui-2-0, libxfce4ui-2-dev, libxfce4ui-common,
+> libxfce4ui-glade, libxfce4ui-utils, libxfce4util7, libxfce4util-bin, libxfce4util-common,
+> libxfce4util-dev, libxfconf-0-3, libxfconf-0-dev
+Основные библиотеки для работы с компонентами Xfce.
+
+> lightdm, lightdm-gtk-greeter, lightdm-vala
+Дисплейный менеджер для X.
+
+> light-locker
+Простой экранный блокировщик для X.
+
+> mousepad
+Лёгкий текстовый редактор для Xfce.
+
+> orage, orage-data
+Календарь и органайзер для Xfce.
+
+> parole, parole-dev
+Медиа-плеер для Xfce, основанный на GStreamer.
+
+> ristretto
+Легковесный просмотрщик изображений для Xfce.
+
+> thunar, thunar-archive-plugin, thunar-data, thunar-media-tags-plugin, thunar-vcs-plugin,
+> thunar-volman
+Основной файловый менеджер для Xfce и его плагины.
+
+> tumbler, tumbler-common, tumbler-plugins-extra
+Демон для создания превью файлов в Xfce.
+
+> xfburn
+Программа для записи CD/DVD в Xfce.
+
+> xfce4, xfce4-appfinder, xfce4-battery-plugin, xfce4-clipman, xfce4-clipman-plugin,
+> xfce4-cpufreq-plugin, xfce4-cpugraph-plugin, xfce4-datetime-plugin, xfce4-dev-tools,
+> xfce4-dict, xfce4-diskperf-plugin, xfce4-fsguard-plugin, xfce4-genmon-plugin
+> xfce4-helpers, xfce4-indicator-plugin, xfce4-mailwatch-plugin, xfce4-mount-plugin,
+> xfce4-mpc-plugin, xfce4-netload-plugin, xfce4-notifyd, xfce4-panel, xfce4-panel-profiles,
+> xfce4-places-plugin, xfce4-power-manager, xfce4-power-manager-data, xfce4-power-manager-plugins,
+> xfce4-pulseaudio-plugin, xfce4-screenshooter, xfce4-sensors-plugin, xfce4-session,
+> xfce4-settings, xfce4-smartbookmark-plugin, xfce4-systemload-plugin, xfce4-taskmanager,
+> xfce4-terminal, xfce4-timer-plugin, xfce4-verve-plugin, xfce4-wavelan-plugin,
+> xfce4-weather-plugin, xfce4-whiskermenu-plugin
+Основные компоненты и плагины для рабочего окружения Xfce, включая панель, настройки и различные
+аплеты.
+
+xfce4-goodies
+Набор дополнительных плагинов и приложений для Xfce.
+
+xfce4-xkb-plugin
+Плагин для рабочего окружения XFCE (позволяет пользователям управлять раскладками клавиатуры,
+например, индикатор в панели задач).
+
+xfconf
+Система настройки для Xfce.
+
+xfdesktop4, xfdesktop4-data
+Управление рабочим столом в Xfce.
+
+xfwm4
+Оконный менеджер для Xfce.

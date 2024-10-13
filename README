@@ -13,8 +13,9 @@
 │   │   │   ├── doc-a.txt
 │   │   │   ├── doc-b.txt
 │   │   │   ├── gnu.txt
-│   │   │   └── trans
-│   │   │       └── doc.txt
+│   │   │   ├── trans
+│   │   │   │   └── doc.txt
+│   │   │   └── xfce.txt
 │   │   └── rhel
 │   │       └── doc.txt
 │   ├── make.txt
@@ -221,4 +222,4 @@
 ├── README
 └── README.md
 
-44 directories, 178 files
+44 directories, 179 files
