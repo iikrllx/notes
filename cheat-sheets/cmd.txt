@@ -168,6 +168,7 @@ $ patch -R Orig < patch                           # отменить измен�
 $ diff -Naur OrigDir/ UpdateDir/ > project-patch
 $ diff -ruN OrigDir/ UpdateDir > project-patch    # без файлов .git и подобных
 $ diff -r a/ b/                                   # дифф каталогов делается через ключ -r
+$ diff -ruN --exclude='.git' OrigDir/ UpdateDir/  # игнорировать .git директорию
 
 Работа с проектами, есть `orig/src/file`:
 $ cp -r orig/ dupl/
