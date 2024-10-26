@@ -10,6 +10,7 @@
 * dpkg статусы (rc, ii)
 * Работа с заплатками
 * DEB переменные
+* Подробнее про --as-needed
 * debug packages
 * debconf
 * Скачать разные версии пакета
@@ -391,6 +392,19 @@ DEB_LDFLAGS_MAINT_APPEND=-Wl,--as-needed
 export DEB_BUILD_MAINT_OPTIONS=hardening=+all
 Повышает безопасность скомпилированного кода, добавляя защитные механизмы, такие как защита от
 переполнения буфера или случайное расположение адресного пространства.
+
+
+--- Подробнее про --as-needed
+Since Debian 11 (bullseye) the line with "Wl,--as-needed" is no longer needed, as on GNU/* systems
+this flag is now passed by default to the linker by gcc. Явное указание больше НЕ требуется:
+export DEB_LDFLAGS_MAINT_APPEND= -Wl,--as-needed
+
+Этот флаг заставляет компоновщик линковать библиотеки только в том случае, если они действительно
+необходимы для разрешения символов:
+$ gcc -o my_program my_program.c -Wl,--as-needed -lmylib
+
+И чтобы проверить разницу между двумя бинарными файлами (без --as-needed и с --as-needed), можно
+воспользоваться утилитами `ldd` и `size`.
 
 
 --- debug packages

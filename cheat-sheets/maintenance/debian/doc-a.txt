@@ -1040,10 +1040,6 @@ variable's hardening value with the "+" and "-" modifier. For example, to enable
 and disable the "fortify" feature you can do this in `debian/rules`:
 export DEB_BUILD_MAINT_OPTIONS=hardening=+pie,-fortify
 
-Since Debian 11 (bullseye) the line with "Wl,--as-needed" is no longer needed, as on GNU/* systems
-this flag is now passed by default to the linker by gcc. Явное указание больше НЕ требуется:
-export DEB_LDFLAGS_MAINT_APPEND= -Wl,--as-needed
-
 
 --- hardening-check
 Это утилита, используемая для проверки бинарных файлов на наличие определённых механизмов защиты
