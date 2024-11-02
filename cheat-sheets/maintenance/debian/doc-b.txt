@@ -399,6 +399,9 @@ Since Debian 11 (bullseye) the line with "Wl,--as-needed" is no longer needed, a
 this flag is now passed by default to the linker by gcc. Явное указание больше НЕ требуется:
 export DEB_LDFLAGS_MAINT_APPEND= -Wl,--as-needed
 
+Но всё же лучше проверить лог сборки пакета, если там будет указан --as-needed, то указание не
+требуется.
+
 Этот флаг заставляет компоновщик линковать библиотеки только в том случае, если они действительно
 необходимы для разрешения символов:
 $ gcc -o my_program my_program.c -Wl,--as-needed -lmylib
