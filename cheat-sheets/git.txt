@@ -305,7 +305,7 @@ $ git commit --amend --author="John Doe <john@doe.org>"
 
 
 --- Работа в приватном репозитории
-Для того чтобы делать `push` / `pull` в приватный репозиторий без запросов логина / пароля, нужно
+Для того чтобы делать push/pull в приватный репозиторий без запросов логина / пароля, нужно
 клонировать репозиторий по SSH, а не по HTTPS, через веб-морду `git clone ssh`, или же изменить в
 репозитории данной командой на ssh: `git remote set-url origin git@github.com:user/repo.gi`
 Затеe создать ключ командой: `ssh-keygen -t ed25519 -C "your_email@example.com"`

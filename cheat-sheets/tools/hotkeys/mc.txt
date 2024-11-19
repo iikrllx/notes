@@ -26,7 +26,7 @@ $ mc -S darkfar    запустить с темой
 $ mc -b            не использовать цвета
 
 Одна большая панель:
-`Listing format...` -> `Long file list`
+Listing format... -> Long file list
 
 Темы хранятся в `/usr/share/mc/skins` и чтобы прописать тему по-умолчанию нужно подправить
 файл `~/.config/mc/ini` атрибут `skin`, поставить туда название темы из `/usr/share/mc`.

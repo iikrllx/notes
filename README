@@ -1,23 +1,20 @@
 .
 ├── cheat-sheets
 │   ├── cmd.txt
+│   ├── debian
+│   │   ├── deb-graph.png
+│   │   ├── doc-a.txt
+│   │   ├── doc-b.txt
+│   │   ├── gnu.txt
+│   │   ├── trans
+│   │   │   └── doc.txt
+│   │   └── xfce.txt
 │   ├── docker
 │   │   ├── doc.txt
 │   │   └── example
 │   │       ├── Dockerfile
 │   │       └── file.c
 │   ├── git.txt
-│   ├── maintenance
-│   │   ├── debian
-│   │   │   ├── deb-graph.png
-│   │   │   ├── doc-a.txt
-│   │   │   ├── doc-b.txt
-│   │   │   ├── gnu.txt
-│   │   │   ├── trans
-│   │   │   │   └── doc.txt
-│   │   │   └── xfce.txt
-│   │   └── rhel
-│   │       └── doc.txt
 │   ├── make.txt
 │   ├── net.txt
 │   ├── regexp.txt
@@ -222,4 +219,4 @@
 ├── README
 └── README.md
 
-44 directories, 179 files
+42 directories, 178 files

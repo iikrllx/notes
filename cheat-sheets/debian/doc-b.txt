@@ -363,7 +363,7 @@ DEBUILD_LINTIAN_OPTS="-i -I --show-overrides"
 Тогда вызов команд будет без флагов (они уже будут указаны).
 
 Большинство программ, учавствующих в сопровождении пакета, будет искать имя и адрес электронной
-почты в переменных окружения `DEBFULLNAME`, `DEBEMAIL`, `EMAIL`.
+почты в переменных окружения DEBFULLNAME, DEBEMAIL, EMAIL.
 В `~/.bashrc` можно прописать:
 $ export EMAIL="hertzog@debian.org"
 $ export DEBFULLNAME="Raphael Hertzog"
