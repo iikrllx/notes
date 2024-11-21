@@ -55,7 +55,7 @@ static ssize_t procfile_read(struct file *file, char *buffer, size_t length, lof
 	printk("procfile_read (/proc/%s) called\n", procfs_name);
 
 	/*
-	Почему функция procfile_read вызывается дважды ?
+	Почему функция procfile_read вызывается дважды?
 	На самом деле она будет вызываться бесконечное кол-во раз пока не получит offset -> EOF
 	EOF это 0 (нужно вернуть return 0), тогда вызов прекратится (сигнализирует о конце файла).
 	Вернуть 0 нужно, если offset больше 0 (то есть чтение уже было)

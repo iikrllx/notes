@@ -90,7 +90,7 @@ int main(void)
   // printf("Hello"); Здесь printf получает указатель на начало массива символов
 
   /*
-	В чем разница ?
+	В чем разница?
 	char a[] = "hello";
 	char *b = "hello";
 

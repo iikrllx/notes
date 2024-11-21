@@ -30,7 +30,7 @@ void del_node(struct Node **head, int key)
     return;
 
     // temp = temp -> next;
-    // почему это не срабатывает ???
+    // почему это не срабатывает???
     // потому что мы присваиваем temp значение temp -> next
     // а нужно присвоить *head = temp -> next
     // мы же будем в print_list перебирать head

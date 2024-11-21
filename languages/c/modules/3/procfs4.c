@@ -84,7 +84,7 @@ static void *my_seq_start(struct seq_file *s, loff_t *pos)
 
 	printk("my_seq_start\n");
 
-	/* beginning a new sequence ? */
+	/* beginning a new sequence? */
 	if (*pos == 0)
 	{
 		/* yes => return a non null value to begin the sequence */
