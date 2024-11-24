@@ -32,7 +32,8 @@
 
 
 --- man
-There’s a kernel of truth in the old Unix joke, "the only command you need to know is man."
+There’s a kernel of truth in the old Unix joke, "the only command you need to
+know is man."
 
 1. Главные пользовательские команды
 2. Системные вызовы
