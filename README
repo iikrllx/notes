@@ -5,6 +5,7 @@
 │   │   ├── deb-graph.png
 │   │   ├── doc-a.txt
 │   │   ├── doc-b.txt
+│   │   ├── doc-c.txt
 │   │   ├── gnu.txt
 │   │   ├── trans
 │   │   │   └── doc.txt
@@ -220,4 +221,4 @@
 ├── README
 └── README.md
 
-42 directories, 179 files
+42 directories, 180 files
