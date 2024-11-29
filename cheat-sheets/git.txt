@@ -548,7 +548,7 @@ Git Large File Storage (Git LFS), который имеет отдельные �
 
 --- git-lfs
 Установка:
-$ sudo apt-get install -y git-lfs
+$ apt-get install -y git-lfs
 
 Инициализация Git LFS в репозитории:
 $ git lfs install
