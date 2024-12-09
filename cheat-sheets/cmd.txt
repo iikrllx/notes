@@ -264,19 +264,20 @@ $ sed -i "s/hello/new/" passwd                               # заменить 
 $ cat /etc/passwd | sed -n 2p                                # получить вторую строку
 
 grep:
-$ ps aux | grep nginx                # нечисто
-$ ps aux | grep '[n]ginx'            # вывод конкретного процесса
-$ grep -i "user" file                # не учитывать регистр, искать USER и user
-$ grep "[0-9]" /var/log/file         # найдем строки только с цифрами
-$ grep -r "hello" /var/log/          # рекурсивный поиск слова hello во всех файлах /var/log
-$ grep -n "user" /etc/passwd         # номер строки совпадения
-$ grep --color                       # добавляет цвета в вывод
-$ grep -E "user|root" passwd         # аналог команды выше
-$ grep "bash$" /etc/passwd           # найти строки, которые заканчиваются bash
-$ grep -r --include="*.c" "yes"      # грепать только в си файлах
-$ grep -- "---"                      # греп черточек
-$ grep -o user /etc/passwd           # выводит не все строки, а только совпадения
-$ grep -rl 'pattern'                 # показывает файлы в которых нашелся паттерн
+$ ps aux | grep nginx                      # нечисто
+$ ps aux | grep '[n]ginx'                  # вывод конкретного процесса
+$ grep -i "user" <file>                    # не учитывать регистр, искать USER и user
+$ grep "[0-9]" <file>                      # найдем строки только с цифрами
+$ grep -r "hello" <dir>                    # рекурсивный поиск слова hello
+$ grep -n "user" /etc/passwd               # номер строки совпадения
+$ grep --color                             # добавляет цвета в вывод
+$ grep -E "user|root" passwd               # грепнуть user и root паттерны
+$ grep "bash$" /etc/passwd                 # найти строки, которые заканчиваются bash
+$ grep -r --include="*.c" "yes"            # грепать только в Си файлах
+$ grep -- "---"                            # греп черточек
+$ grep -o user /etc/passwd                 # выводит не все строки, а только совпадения
+$ grep -rl 'pattern'                       # показывает файлы в которых нашелся паттерн
+$ grep -B1 '1 fuzzy tranlsation.$' <file>  # грепнуть паттерн + вывести строку выше
 
 find:
 $ find . -name "file"                             # найти по имени file
