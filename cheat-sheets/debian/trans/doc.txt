@@ -128,6 +128,9 @@ $ ../format-po.sh                    # форматирование файлов
 $ ../show-stats.sh man1/intro.1.po   # показывает статистику конкретного файла
 $ ../show-needed-updates.sh          # показывает файлы, которые надо обновить
 
+Смотреть:
+https://salsa.debian.org/manpages-l10n-team/manpages-l10n/-/blob/master/CONTRIBUTING.md?ref_type=heads
+
 
 --- Рекомендации по переводу
 * Основная рабочая кодировка - UTF-8.
