@@ -90,7 +90,7 @@ https://www.debian.org/international/l10n/pseudo-urls
 
 --- Перевод сайта Debian (webwml)
 $ git clone https://salsa.debian.org/webmaster-team/webwml
-Сделать изменения + отправить на проверку в список рассылки, затем создать Merge Request
+Сделать изменения + отправить на проверку в список рассылки, затем создать MR.
 debian-l10n-russian@lists.debian.org и debian-www@lists.debian.org.
 
 Если нужен полный доступ на запись, необходимо добавить SSH ключи и попросить
@@ -110,9 +110,9 @@ $ ./check_links.pl russian/
 --- Перевод man страниц (manpages-l10n)
 $ git clone https://salsa.debian.org/manpages-l10n-team/manpages-l10n
 Этот проект охватывает значительное количество man страниц, которые часто
-используются и важны. Основная цель проекта - поддерживать и обновлять переводы,
-чтобы пользователи могли легко получать справочную информацию на своем родном
-языке.
+используются и важны для чтения, локализации. Основная цель проекта -
+поддерживать и обновлять переводы, чтобы пользователи могли легко получать
+справочную информацию на своем родном языке.
 
 Например, пакеты, которые относятся к этому проекту:
 manpages
@@ -120,13 +120,13 @@ manpages-ru
 manpages-<locale>
 и т.д.
 
-$ cd po/
-$ ./update-common.sh ru/               # ???
-$ ./use-for-compendium ru/man1/a.1.po  # обновляет ru/common (общий шаблон)
-$ ./update-translations.sh ru/         # обновляет маны в соответствии с ru/common
-$ ./format-po.sh ru/                   # форматирование файлов
-$ ./show-stats.sh ru/man1/intro.1.po   # показывает статистику конкретного файла
-$ ./show-needed-updates.sh ru/         # показывает файлы, которые надо обновить
+$ cd po/ru
+$ ../update-common.sh                # обновляет compendium (актуализация + форматирование)
+$ ../use-for-compendium man1/a.1.po  # обновляет ru/common (общий шаблон)
+$ ../update-translations.sh          # обновляет manpages в соответствии с ru/common
+$ ../format-po.sh                    # форматирование файлов
+$ ../show-stats.sh man1/intro.1.po   # показывает статистику конкретного файла
+$ ../show-needed-updates.sh          # показывает файлы, которые надо обновить
 
 
 --- Рекомендации по переводу
