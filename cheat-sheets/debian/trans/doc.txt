@@ -122,7 +122,7 @@ manpages-<locale>
 
 $ cd po/ru
 $ ../update-common.sh                # обновляет compendium (актуализация + форматирование)
-$ ../use-for-compendium man1/a.1.po  # обновляет ru/common (общий шаблон)
+$ ../use-for-compendium man1/a.1.po  # обновляет ru/common (общий шаблон) в соответствии с manpages
 $ ../update-translations.sh          # обновляет manpages в соответствии с ru/common
 $ ../format-po.sh                    # форматирование файлов
 $ ../show-stats.sh man1/intro.1.po   # показывает статистику конкретного файла
