@@ -37,6 +37,7 @@
 * Максимальный размер файла/репозитория на GitHub
 * git-lfs
 * Создание пустых веток
+* git push origin master и git push --set-upstream master
 
 
 --- Описание
@@ -579,3 +580,23 @@ $ git checkout --orphan latest
 $ git rm -rf .
 $ git commit --allow-empty -m "Initial empty commit"
 $ git push origin latest
+
+
+--- git push origin master и git push --set-upstream master
+- Отправляет изменения из локальной ветки `master` в удаленный репозиторий
+  `origin` в ветку `master`.
+- Используется для передачи изменений на удаленный сервер.
+
+$ git push origin master
+
+- Устанавливает локальную ветку `master` для отслеживания удаленной ветки
+  `master` в `origin`.
+- После выполнения этой команды можно будет просто использовать `git push` без
+  указания удаленной ветки и репозитория, так как они будут заданы по
+  умолчанию.
+
+$ git push --set-upstream origin master
+
+Для каждой ветки можно установить upstream. После этого, когда вы
+переключаетесь на любую из этих веток, `git push` будет автоматически знать,
+куда передавать изменения, благодаря установленной связи.
