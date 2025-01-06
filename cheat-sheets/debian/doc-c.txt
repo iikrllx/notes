@@ -6,6 +6,8 @@
 * apt-rdepends
 * Транзитивные зависимости
 * pristine-tar
+* submit@bugs.debian.org
+* Шаблон письма при отправке своих патчей/изменений
 
 
 --- Подпись пакета (общая информация)
@@ -201,3 +203,34 @@ $ pristine-tar gendelta ../<package>_<version>.orig.tar.bz2 <package>_<version>.
 
 $ pristine-tar checkout ../<package>_<version>.orig.tar.bz2
 Создаст/восстановит -> ../<package>_<version>.orig.tar.bz2
+
+
+--- submit@bugs.debian.org
+Можно не использовать утилиту `reporbug`, а написать письмом на прямую.
+Например, если нужно создать новый тикет в системе BTS
+(Debian Bug Tracking System <submit@bugs.debian.org>)
+
+Допустим RFP:
+
+Package: wnpp
+Severity: wishlist
+
+Package name: <name>
+Version: <version>
+
+...
+
+
+--- Шаблон письма при отправке своих патчей/изменений
+Мне нравится этот шаблон.
+
+Subject: [PATCH] Updates and Improvements to the '<package>' package.
+
+<suite>: <package>: <version>
+
+Dear Maintainer, sorry for bothering you.
+I hope this message finds you well.
+
+...
+
+Thank you!
