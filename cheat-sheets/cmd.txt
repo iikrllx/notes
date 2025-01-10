@@ -281,27 +281,28 @@ $ grep -rl 'pattern'                       # показывает файлы в 
 $ grep -B1 '1 fuzzy tranlsation.$' <file>  # грепнуть паттерн + вывести строку выше
 
 find:
-$ find . -name "file"                             # найти по имени file
-$ find . -iname "file"                            # не обращать внимание на регистр
-$ find . -type d                                  # искать толко директории
-$ find . -type f                                  # искать только файлы
-$ find . -maxdepth 1                              # углубленность поиска
-$ find /tmp -user "root"                          # искать файлы по владельцу
-$ find / -name "*.sh"                             # искать файлы с расширением .sh
-$ find . -not -name "file"                        # найти все файлы, кроме file
-$ find /tmp -type f -exec cat {} \;               # найти файлы и прочитать их
-$ find /tmp -type f -exec ls -ld {} \;            # найти файлы и вывести их разрешения
-$ find /tmp -type f -empty                        # найти пустые файлы
-$ find . -type f -exec rm -rf {} \;               # удалить все файлы
-$ find / -size +1G                                # найти файлы больше 1G
-$ find . -type f -delete                          # удалить все файлы
-$ find /tmp/aaa -mindepth 1 -delete               # удаляет и файлы и каталоги (без текущего каталога /tmp/aaa)
-$ find / -perm -u=s                               # найти setuid файлы
-$ find / -inum <inode>                            # найти inode
-$ find /var/* -type d -exec ls -1td {} +          # вывести последние измененные директории
-$ find . -name "*.png" -o -name "*.jpg"           # показать все 'png' и 'jpg' форматы
-$ find . -name "*.orig" -not -path "./.pc/*"      # искать *.orig, но игнорировать .pc/*
-$ find . -name "*.i686.rpm" -exec mv {} ../ww/ \; # переместить все *.i686.rpm файлы в ../w
+$ find . -name "file"                              # найти по имени file
+$ find . -iname "file"                             # не обращать внимание на регистр
+$ find . -type d                                   # искать толко директории
+$ find . -type f                                   # искать только файлы
+$ find . -maxdepth 1                               # углубленность поиска
+$ find /tmp -user "root"                           # искать файлы по владельцу
+$ find / -name "*.sh"                              # искать файлы с расширением .sh
+$ find . -not -name "file"                         # найти все файлы, кроме file
+$ find /tmp -type f -exec cat {} \;                # найти файлы и прочитать их
+$ find /tmp -type f -exec ls -ld {} \;             # найти файлы и вывести их разрешения
+$ find /tmp -type f -empty                         # найти пустые файлы
+$ find . -type f -exec rm -rf {} \;                # удалить все файлы
+$ find / -size +1G                                 # найти файлы больше 1G
+$ find . -type f -delete                           # удалить все файлы
+$ find /tmp/aaa -mindepth 1 -delete                # удаляет и файлы и каталоги (без текущего каталога /tmp/aaa)
+$ find / -perm -u=s                                # найти setuid файлы
+$ find / -inum <inode>                             # найти inode
+$ find /var/* -type d -exec ls -1td {} +           # вывести последние измененные директории
+$ find . -name "*.png" -o -name "*.jpg"            # показать все 'png' и 'jpg' форматы
+$ find . -name "*.orig" -not -path "./.pc/*"       # искать *.orig, но игнорировать .pc/*
+$ find . -name "*.i686.rpm" -exec mv {} ../ww/ \;  # переместить все *.i686.rpm файлы в ../w
+$ find . -wholename "*/debian/control"             # искать по полному пути
 
 Можно искать не только `f`/`d`, но и `l` `b` `c` `s` `p`
 ссылки, блочные устройства, символьные устройства, каналы, сокеты.
