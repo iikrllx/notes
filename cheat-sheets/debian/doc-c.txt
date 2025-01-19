@@ -236,6 +236,11 @@ Control: retitle -1 ITP: libxfce4windowing -- windowing library
 вносить изменения в тикеты. Например, команда `retitle` позволяет изменять
 заголовок тикета. Это небольшой пример.
 
+Если надо закрыть баг, например:
+Кому: 1092159-done@bugs.debian.org
+Тема: #1092159
+Closing this RFP: this package is already in sid.
+
 
 --- Шаблон письма при отправке патчей/изменений
 Мне нравится этот шаблон.
