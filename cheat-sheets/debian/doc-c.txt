@@ -231,6 +231,7 @@ Version: <version>
 Кому: 1092159@bugs.debian.org
 Тема: #1092159
 Control: retitle -1 ITP: libxfce4windowing -- windowing library
+Control: owner -1 Kirill Rekhov <krekhov.dev@gmail.com>
 
 В системе отслеживания ошибок Debian (BTS) с помощью команд Control можно
 вносить изменения в тикеты. Например, команда `retitle` позволяет изменять
