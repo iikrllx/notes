@@ -423,7 +423,7 @@ echo ${array[@]}
 
 
 Проверка команды перед использованием
-if command -v xsel; then
+if command -v xsel >/dev/null; then
 	...
 fi
 
