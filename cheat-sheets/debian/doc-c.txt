@@ -43,14 +43,14 @@ $ gpg --verify <file>.changes
 $ gpg --verify <file>.dsc
 
 Изменение доверия к ключу (trust):
-$ gpg --edit-key "ваш_email@example.com"
+$ gpg --edit-key "example@gmail.com"
 
 Экспортировать публичный ключ:
-$ gpg --export -a "ваш_email@example.com" > public_key.asc
+$ gpg --export -a "example@gmail.com" > public_key.asc
 $ gpg --export --armor <KEY_ID> > public_key.asc
 
 Экспортировать приватный ключ:
-$ gpg --export-secret-keys -a "ваш_email@example.com" > private_key.asc
+$ gpg --export-secret-keys -a "example@gmail.com" > private_key.asc
 
 Посмотреть все подписи публичного ключа:
 $ gpg --list-sigs <KEY_ID>
@@ -285,7 +285,7 @@ $ apt-rdepends -b <package>
 устанавливаете, а от его зависимостей. Проще говоря, это зависимости
 зависимостей.
 
-Например, предположим, что у вас есть пакет A, который зависит от пакета B,
+Например, предположим, что есть пакет A, который зависит от пакета B,
 и пакет B, в свою очередь, зависит от пакета C. В этом случае:
 
 - Пакет B является прямой зависимостью пакета A.
