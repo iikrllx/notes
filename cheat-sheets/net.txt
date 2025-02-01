@@ -131,6 +131,8 @@ $ curl -I https://fatal.website                # получить полный �
 $ curl -o file ftp://192.168.32.24             # скачать в file с ftp
 $ curl -T file ftp://192.168.32.24/upload      # отправить file на ftp
 $ curl -O https://fatal.website/favicon.ico    # скачать файл, директории скачать нельзя
+$ curl -L -o vifmrc https://github.com/vifmrc  # скачать vifmrc файл
+$ curl -L -O https://github.com/vifmrc         # скачать файл
 
 
 --- whois
