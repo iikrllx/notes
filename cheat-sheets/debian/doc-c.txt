@@ -668,3 +668,13 @@ ${binary:Version}
 подставляется текущей версией пакета, который вы собираете. Таким образом, это
 гарантирует, что пакет будет зависеть именно от той версии `libfoo`, которая
 соответствует версии основного пакета.
+
+Желательно, чтобы `debian/copyright` соответствовала лицензии проекта:
+
+Files: *
+Copyright: 2016-2025 Karl Yngve Lervåg <karl.yngve@gmail.com>
+License: Expat
+
+Files: debian/*
+Copyright: 2025 Kirill Rekhov <krekhov.dev@gmail.com>
+License: Expat
