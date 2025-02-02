@@ -15,23 +15,24 @@
 │   │   └── example
 │   │       ├── Dockerfile
 │   │       └── file.c
+│   ├── fail2ban.txt
 │   ├── git.txt
 │   ├── make.txt
 │   ├── net.txt
 │   ├── regexp.txt
 │   └── tools
-│       ├── fail2ban.txt
+│       ├── aptitude.txt
 │       ├── gdb.txt
-│       ├── hotkeys
-│       │   ├── aptitude.txt
-│       │   ├── mc.txt
-│       │   ├── mutt.txt
-│       │   ├── newsboat.txt
-│       │   ├── tig.txt
-│       │   ├── tmux.txt
-│       │   ├── vim.txt
-│       │   └── xfce.txt
-│       └── valgrind.txt
+│       ├── mc.txt
+│       ├── mutt.txt
+│       ├── newsboat.txt
+│       ├── README.md
+│       ├── tig.txt
+│       ├── tmux.txt
+│       ├── valgrind.txt
+│       ├── vifm.txt
+│       ├── vim.txt
+│       └── xfce.txt
 ├── CONTRIBUTING.md
 ├── contributors.md
 ├── languages
@@ -221,4 +222,4 @@
 ├── README
 └── README.md
 
-42 directories, 180 files
+41 directories, 182 files
