@@ -1,5 +1,7 @@
 https://github.com/iikrllx/dotfiles-debian/blob/master/root/etc/vifm/vifmrc
 
+$ vifm .           открыть vifm в текущей директории
+
 ctrl + z           временно скрыть файловый менеджер и открыть оболочку
 fg                 вернуться обратно в vifm
 
