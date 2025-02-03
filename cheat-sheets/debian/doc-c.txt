@@ -76,6 +76,7 @@ $ gpg --clearsign message.txt
 
 Отдельная подпись для файла:
 $ gpg --detach-sign --armor -o signature.asc text
+$ gpg --verify signature.asc text # Good signature
 
 Удалить публичный ключ:
 $ gpg --delete-key <pub>
