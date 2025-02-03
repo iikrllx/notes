@@ -49,6 +49,8 @@ $ gpg --edit-key "example@gmail.com"
 $ gpg --export -a "example@gmail.com" > public_key.asc
 $ gpg --export --armor <KEY_ID> > public_key.asc
 
+`--armor` делает формат ключа более ASCII читабельным, а не бинарным.
+
 Экспортировать приватный ключ:
 $ gpg --export-secret-keys -a "example@gmail.com" > private_key.asc
 
