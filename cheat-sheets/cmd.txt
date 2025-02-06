@@ -30,6 +30,7 @@
 * tree
 * Удаление директории
 * Сортировка и удаление дубликатов в файле
+* realpath
 
 
 --- man
@@ -844,3 +845,9 @@ po/ru/man1/basename.1.po
 
 Команда выглядит так:
 $ sort paths.txt | uniq > clean-paths.txt
+
+
+--- realpath
+Как узнать абсолютный путь файла?
+$ realpath ./fff
+/home/user/fff
