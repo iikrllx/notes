@@ -102,6 +102,12 @@ $ git mv file fi
 Просмотр urls:
 $ git remote -v
 
+Поменять origin на:
+$ git remote set-url origin git@salsa.debian.org:example/new.git
+
+Проверить соединение:
+$ git ls-remote
+
 Команда `git push` включает в себя два автоматических имени:
 $ git push origin master
 git push (сервер) (ветка)
