@@ -314,6 +314,12 @@ $ git push origin v1.1
 $ git tag -d v1.0
 $ git push origin :refs/tags/v1.0
 
+Информация о теге:
+$ git tag -v upstream/2024.01.24
+
+Подписать тег:
+git tag -s upstream/2024.01.24
+
 
 --- Как изменить автора последнего коммита
 $ git commit --amend --author="John Doe <john@doe.org>"
