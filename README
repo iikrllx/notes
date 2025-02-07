@@ -9,6 +9,7 @@
 │   │   ├── doc-d.txt
 │   │   ├── trans
 │   │   │   └── doc.txt
+│   │   ├── vim-addon.txt
 │   │   └── xfce.txt
 │   ├── docker
 │   │   ├── doc.txt
@@ -222,4 +223,4 @@
 ├── README
 └── README.md
 
-41 directories, 182 files
+41 directories, 183 files
