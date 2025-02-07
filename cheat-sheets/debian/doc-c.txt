@@ -22,6 +22,7 @@
 * Проверка целостности пакета (dscverify)
 * md5sum
 * Немного Best Practices
+* git-buildpackage (gbp)
 
 
 --- Команды GPG
@@ -681,3 +682,47 @@ License: Expat
 Files: debian/*
 Copyright: 2025 Kirill Rekhov <krekhov.dev@gmail.com>
 License: Expat
+
+
+--- git-buildpackage (gbp)
+Файл `debian/gbp.conf` используется для настройки поведения `git-buildpackage`
+(GBP), инструмента, который помогает автоматизировать сборку Debian пакетов из
+Git репозиториев. Он задает параметры, такие как ветки для сборки, команды для
+выполнения после сборки, и другие опции, влияющие на процесс сборки и управления
+пакетами.
+
+Пример файла:
+[DEFAULT]
+debian-branch=debian/unstable
+upstream-branch=upstream/latest
+postbuild = lintian $GBP_CHANGES_FILE
+pristine-tar = False
+sign-tags=True
+
+[DEFAULT]: Это секция конфигурации по умолчанию, которая применяется ко всем
+командам `git-buildpackage`, если не указано иное.
+
+debian-branch=debian/unstable: ветка в Git, которая содержит файлы и изменения,
+специфичные для Debian.
+
+upstream-branch=upstream/latest: Указывает ветку, содержащую исходный код от
+разработчиков, без специфических для Debian изменений.
+
+postbuild = lintian $GBP_CHANGES_FILE: Это команда, которая выполняется после
+сборки пакета.
+
+pristine-tar = False: Указывает, что не будет использоваться `pristine-tar`.
+`pristine-tar` обычно используется для воссоздания точных копий исходных архивов
+tar из информации, хранящейся в Git.
+
+sign-tags=True: Указывает, что теги в Git должны подписываться GPG-подписью. Это
+добавляет уровень безопасности и позволяет удостовериться в подлинности тегов.
+
+Как использовать?
+$ git clone https://github.com/vimwiki/vimwiki -b v2024.01.24 # остановиться на определенном теге
+$ cd vimwiki
+$ git checkout -b debian/latest
+$ git checkout -b upstream/latest
+$ gbp import-orig ~/Downloads/vimwiki-2024.01.24.tar.gz --debian-branch=debian/latest --upstream-branch=upstream/latest
+$ git checkout -b debian/latest # добавить `debian/*` файлы вместе с `debian/gbp.conf`
+$ gbp buildpackage # благодаря `debian/gbp.conf` сборка будет контролироваться
