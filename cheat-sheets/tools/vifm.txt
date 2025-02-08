@@ -40,4 +40,5 @@ ctrl + u           поменять панели местами
 vifm отображает содержимое пакета в бинарном формате, можно сделать такой трюк:
 ctrl + s
 $ dpkg-deb -c package.deb
+$ dpkg-deb -I package.deb
 ctrl + d
