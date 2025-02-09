@@ -683,6 +683,19 @@ Files: debian/*
 Copyright: 2025 Kirill Rekhov <krekhov.dev@gmail.com>
 License: Expat
 
+Коммит релиза (`debian/changelog` изменения) должен быть отдельным и
+соответствовать тегу debian/... После коммита можно использовать:
+$ gbp tag # автоматически подписывает тег
+
+Как обновить `upstream/latest` ветку, если есть новый релиз, автоматически,
+сделает коммит и тег:
+$ gbp import-orig --uscan --upstream-branch=upstream/latest
+
+Начать новый релиз, добавить все описанные коммиты в `debian/changelog`:
+$ gbp dch -R
+$ gbp tag  # создать тег
+$ gbp push # отправляет коммиты и теги
+
 
 --- git-buildpackage (gbp)
 Файл `debian/gbp.conf` используется для настройки поведения `git-buildpackage`
