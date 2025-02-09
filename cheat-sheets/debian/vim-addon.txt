@@ -2,6 +2,7 @@
 * Что такое addon пакеты (vim)
 * Основные рекомендации для сборки addon пакетов (vim)
 * vim-addon-manager, dh-vim-addon, dh-sequence-vim-addon
+* Заменить vim-addon-manager на более современный лад
 
 
 --- Что такое addon пакеты (vim)
@@ -71,3 +72,29 @@ $ apt-get source vim-airline
 Если создается Debian-пакет, который включает в себя плагин для Vim, и нужно,
 чтобы этот плагин правильно интегрировался в систему, используя инфраструктуру
 Debian, можно использовать `dh-sequence-vim-addon`.
+
+
+--- Заменить vim-addon-manager на более современный лад
+Можно добавить файлы:
+debian/vim-vimwiki.neovim-addon
+debian/vim-vimwiki.vim-addon
+
+В пакете появляются файлы:
+/usr/share/vim/vimfiles/pack/dist-bundle/start/vim-vimwiki
+/usr/share/nvim/site/pack/dist-bundle/start/vim-vimwiki
+
+Это заменяет:
+$ vim-addon-manager install vim-vimwiki
+
+Используется `dh-sequence-vim-addon`, это автоматически управляет установкой
+плагинов для Vim и Neovim. Позволяет избежать ручного использования
+`vim-addon-manager`. При установке пакета, файлы плагинов автоматически
+копируются в соответствующие каталоги без необходимости выполнения
+дополнительных команд.
+
+/usr/share/vim/vimfiles/pack/dist-bundle/start/vim-vimwiki:
+Это стандартное место для установки плагинов Vim, которые должны быть
+автоматически загружены при старте.
+
+/usr/share/nvim/site/pack/dist-bundle/start/vim-vimwiki:
+Это аналогичное место для Neovim.
