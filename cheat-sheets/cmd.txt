@@ -849,5 +849,9 @@ $ sort paths.txt | uniq > clean-paths.txt
 
 --- realpath
 Как узнать абсолютный путь файла?
-$ realpath ./fff
-/home/user/fff
+$ realpath free_hugepages
+/sys/kernel/mm/hugepages/hugepages-2048kB/free_hugepages
+
+Как узнать абсолютный путь текущей директории?
+$ pwd # print working directory
+/home/user/Downloads
