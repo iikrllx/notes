@@ -321,7 +321,7 @@ $ git push origin v1.1
 
 Удаление тега:
 $ git tag -d v1.0
-$ git push origin :refs/tags/v1.0
+$ git push origin --delete v1.0
 
 Информация о теге:
 $ git tag -v upstream/2024.01.24
