@@ -148,7 +148,7 @@ $ git log --pretty=oneline | tail - 10      # последние строки
 $ git log --since=1.weeks                   # за последнюю неделю
 $ git log --abbrev-commit                   # список log с SHA-1 хешами
 $ git log --abbrev-commit --pretty=oneline
-$ git rev-list --count master               # кол-во логов
+$ git rev-list --count HEAD                 # кол-во логов
 
 $ git log --follow -- <filename>            # покажет коммиты в которых редактировали данный файл
 $ git log -- debian/upstream/metadata       # покажет коммиты в которых редактировали данный файл
