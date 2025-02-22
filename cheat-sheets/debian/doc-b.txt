@@ -715,6 +715,13 @@ NMU обычно используется для быстрого исправл
 не может сделать это вовремя. В таком случае обычно рекомендуется связаться с
 основным сопровождающим и уведомить его о предстоящих изменениях.
 
+A non-maintainer upload (NMU) is an upload of a package to the debian archive by
+a developer who is not the maintainer of the package. This should usually not be
+the case, but in special cases (such as for RC bugs, when the maintainer does
+not respond to the bug report) it is allowed.
+
+Часто такие разработчики не отправляют изменения в Salsa.
+
 
 --- Иерархия команд сборки
 debian/rules = сценарий сопровождающего для сборки пакета
