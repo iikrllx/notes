@@ -767,6 +767,9 @@ For example: https://ftp.debian.org/debian/dists/bookworm/main/Contents-all.gz
 `Contents-amd64`, `Contents-i386` и т.д., которые содержат список всех файлов
 для соответствующих архитектур.
 
+Например, если в пакете `clipboard` есть `/usr/bin/cp`, желательно сделать:
+$ grep 'usr/bin/cb' Contents-all
+
 
 --- Проверка пакета на ошибки
 $ debi <pack>.changes
