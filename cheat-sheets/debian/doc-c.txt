@@ -756,7 +756,7 @@ $ cd vimwiki
 $ git checkout -b debian/latest
 $ git checkout -b upstream/latest
 $ gbp import-orig ~/Downloads/vimwiki-2024.01.24.tar.gz --debian-branch=debian/latest --upstream-branch=upstream/latest --sign-tags
-$ git checkout -b debian/latest # добавить `debian/*` файлы вместе с `debian/gbp.conf`
+$ git checkout debian/latest # добавить `debian/*` файлы вместе с `debian/gbp.conf`
 $ gbp buildpackage # благодаря `debian/gbp.conf` сборка будет контролироваться
 
 `gbp buildpackage` (Git Build Package) строит пакеты прямо на текущей системе,
