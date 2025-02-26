@@ -715,6 +715,9 @@ Description: Shared Library libcbwayland1
  optimization for Wayland-based systems, enabling efficient clipboard data
  exchange and synchronization within the Clipboard application.
 
+В описании пакета желательно не использовать 'you/your', а писать текст сухо,
+но это по желанию скорее.
+
 
 --- git-buildpackage (gbp)
 Файл `debian/gbp.conf` используется для настройки поведения `git-buildpackage`
