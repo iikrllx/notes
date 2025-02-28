@@ -2,7 +2,7 @@
 * Что такое addon пакеты (vim)
 * Основные рекомендации для сборки addon пакетов (vim)
 * vim-addon-manager, dh-vim-addon, dh-sequence-vim-addon
-* Заменить vim-addon-manager на более современный лад
+* Заменить vim-addon-manager на более современный
 
 
 --- Что такое addon пакеты (vim)
@@ -22,7 +22,7 @@
 Выводит список всех загруженных в текущей сессии скриптов и их полных путей.
 
 
---- Основные рекомендации для сборки addon пакетов (vim).
+--- Основные рекомендации для сборки addon пакетов (vim)
 https://vim-team.pages.debian.net/vim/index.html
 
 В `debian/control` используйте:
@@ -41,13 +41,16 @@ Architecture: all
 
 Добавьте `Depends: ${vim-addon:Depends}` в секции бинарного пакета.
 
-Если что-то непонятно, можно посмотреть пример в готовых пакетах:
+Если что-то непонятно, можно посмотреть пример в готовых пакетах, например:
 $ apt-get source vim-airline
 
 
 --- vim-addon-manager, dh-vim-addon, dh-sequence-vim-addon
-Эти три пакета связаны с управлением и сборкой Vim плагинов в среде Debian,
+Эти три инструмента связаны с управлением и сборкой Vim плагинов в среде Debian,
 но у каждого из них есть своя роль:
+
+Пакеты: vim-addon-manager, dh-vim-addon
+Инструмент: dh-sequence-vim-addon
 
 1. vim-addon-manager: Это инструмент, который помогает управлять установкой и
 активацией Vim плагинов для пользователей. Он предоставляет команды для
@@ -74,7 +77,7 @@ $ apt-get source vim-airline
 Debian, можно использовать `dh-sequence-vim-addon`.
 
 
---- Заменить vim-addon-manager на более современный лад
+--- Заменить vim-addon-manager на более современный
 Можно добавить файлы:
 debian/vim-vimwiki.neovim-addon
 debian/vim-vimwiki.vim-addon
