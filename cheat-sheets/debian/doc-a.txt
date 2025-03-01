@@ -251,6 +251,7 @@ debian/watch
 uscan - это инструмент, который используется для автоматического поиска и
 загрузки новых версий пакетов на основе информации из файла `debian/watch`.
 
+$ uscan --force-download
 $ uscan --no-download
 $ uscan --download
 $ uscan --verbose
