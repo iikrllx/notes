@@ -992,6 +992,7 @@ $ unset DH_VERBOSE
 
 $ dpkg-buildflags --get CFLAGS
 $ dpkg-buildflags --export
+$ dpkg-buildflags --status
 
 Пользователь может переопределять или дополнять флаги с помощью переменных
 окружения, таких как `DEB_CFLAGS_APPEND`. Например, чтобы добавить флаг к
@@ -1075,6 +1076,17 @@ include /usr/share/dpkg/default.mk
 RELRO, и данная опция активирует базовый уровень защиты.
 
 Есть еще PIE и BINDNOW - если кратко, повышают безопасность =)
+
+Например, часто можно увидеть, что Lintian говорит:
+I: xfce4-docklike-plugin: hardening-no-fortify-functions
+[usr/lib/x86_64-linux-gnu/xfce4/panel/plugins/libdocklike.so]
+
+Связано с опцией сборки `-D_FORTIFY_SOURCE=2`. Сообщение означает, что в плагине
+либо нет функций, которые нужно защищать, либо они уже защищены на этапе
+компиляции. Также возможно, что пакет не был собран с дефолтными флагами
+компилятора Debian. Можно попробовать пересобрать с:
+include /usr/share/dpkg/default.mk
+Или добавить `debian/lintian-overrides`.
 
 
 --- hardening=+all
