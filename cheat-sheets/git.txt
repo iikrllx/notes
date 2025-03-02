@@ -431,7 +431,7 @@ $ git clone git@server-ip:path-to-project/
 
 --- Долгое клонирование
 Linux ядро клонируется очень долго, можно избежать и клонировать только последние коммиты:
-$ git clone --depth 1 --branch master git@github.com:iikrllx/linux.git
+$ git clone --depth 1 --branch master git@github.com:krekhovx/linux.git
 
 
 --- Права доступа файлов

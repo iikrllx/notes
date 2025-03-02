@@ -1,4 +1,4 @@
-https://github.com/iikrllx/dotfiles-debian/blob/master/.tmux.conf
+https://github.com/krekhovx/dotfiles-debian/blob/master/.tmux.conf
 
 --- Window
 ctrl + b + shift + "       split window vertically

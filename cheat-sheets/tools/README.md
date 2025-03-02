@@ -1,1 +1,1 @@
-https://github.com/iikrllx/dotfiles-debian
+https://github.com/krekhovx/dotfiles-debian

@@ -1,4 +1,4 @@
-https://github.com/iikrllx/dotfiles-debian/blob/master/.newsboat/config
+https://github.com/krekhovx/dotfiles-debian/blob/master/.newsboat/config
 
 Go to last entry             G
 Go to first entry            g

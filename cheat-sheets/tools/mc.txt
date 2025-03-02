@@ -1,4 +1,4 @@
-https://github.com/iikrllx/dotfiles-debian/tree/master/.config/mc
+https://github.com/krekhovx/dotfiles-debian/tree/master/.config/mc
 
 f3                 просмотр содержимого
 f4                 изменить содержимое

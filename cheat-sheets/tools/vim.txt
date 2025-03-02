@@ -1,4 +1,4 @@
-https://github.com/iikrllx/dotfiles-debian/blob/master/.vimrc
+https://github.com/krekhovx/dotfiles-debian/blob/master/.vimrc
 
 Темы:
 * Команды
