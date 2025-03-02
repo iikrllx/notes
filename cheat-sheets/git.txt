@@ -38,6 +38,7 @@
 * git-lfs
 * Создание пустых веток
 * git push origin master и git push --set-upstream master
+* Подписание тегов и коммитов
 
 
 --- Описание
@@ -618,3 +619,25 @@ $ git push --set-upstream origin master
 Для каждой ветки можно установить upstream. После этого, когда вы
 переключаетесь на любую из этих веток, `git push` будет автоматически знать,
 куда передавать изменения, благодаря установленной связи.
+
+
+--- Подписание тегов и коммитов
+~/.gitconfig:
+[user]
+	email = example@gmail.com
+	name = Ivan Ivanov
+	signingkey = 0C2C5915519CE4A0
+
+[commit]
+	gpgSign = true
+
+Затем в GitLab/GitHub:
+Settings -> GPG Keys
+
+В терминале:
+$ gpg --export --armor 0C2C5915519CE4A0
+
+Добавить новый ключ.
+
+Затем коммиты будут автоматически подписываться, а для тегов можно использовать:
+$ git tag -s <new-tag>
