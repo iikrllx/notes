@@ -1,0 +1,14 @@
+.
+├── deb-graph.png
+├── doc-a.txt
+├── doc-b.txt
+├── doc-c.txt
+├── doc-d.txt
+├── README
+├── salsa-ci.txt
+├── trans
+│   └── doc.txt
+├── vim-addon.txt
+└── xfce.txt
+
+2 directories, 10 files
