@@ -7,6 +7,7 @@
 │   │   ├── doc-b.txt
 │   │   ├── doc-c.txt
 │   │   ├── doc-d.txt
+│   │   ├── README
 │   │   ├── salsa-ci.txt
 │   │   ├── trans
 │   │   │   └── doc.txt
@@ -224,4 +225,4 @@
 ├── README
 └── README.md
 
-41 directories, 184 files
+41 directories, 185 files
