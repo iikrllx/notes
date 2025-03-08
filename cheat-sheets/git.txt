@@ -26,19 +26,20 @@
 * Личный серверный git
 * git status и русские файлы
 * upstream
-* Долгое клонирование
+* Клонирование ядра
 * Права доступа файлов
 * Merge Request и Pull Request
 * GitHub vs Bitbucket vs GitLab
-* Github traffic
-* README, оформление, источники
+* Github Traffic
+* README, оформление, источники, заметки
 * git format-patch
 * Аббревиатуры, комментарии пользователей
 * Максимальный размер файла/репозитория на GitHub
 * git-lfs
 * Создание пустых веток
-* git push origin master и git push --set-upstream master
+* origin master и --set-upstream origin master
 * Подписание тегов и коммитов
+* Перезалить готовый репозиторий
 
 
 --- Описание
@@ -148,9 +149,9 @@ $ git log --oneline
 $ git log --pretty=oneline                  # вывести в одну строку
 $ git log --pretty=oneline | tail - 10      # последние строки
 $ git log --since=1.weeks                   # за последнюю неделю
+$ git rev-list --count HEAD                 # кол-во логов
 $ git log --abbrev-commit                   # список log с SHA-1 хешами
 $ git log --abbrev-commit --pretty=oneline
-$ git rev-list --count HEAD                 # кол-во логов
 
 $ git log --follow -- <filename>            # покажет коммиты в которых редактировали данный файл
 $ git log -- debian/upstream/metadata       # покажет коммиты в которых редактировали данный файл
@@ -191,8 +192,8 @@ $ git rebase -i HEAD~<n>
 или
 $ git rebase --root
 
-Далее открывается текстовой редактор и перед коммитом нужно поставить параметр d
-(drop), затем:
+Далее открывается текстовой редактор и перед коммитом нужно поставить параметр
+d (drop), затем:
 $ git push -f
 
 
@@ -261,7 +262,7 @@ $ git merge first      # делаем слияние
 
 Удаление ветки:
 $ git branch -d first
-$ git branch -D first  # если ветка имеет наработки, но нам всё равно надо её удалить
+$ git branch -D first  # если ветка имеет наработки, но надо её удалить
 
 Последние коммиты на каждой из ветки:
 $ git branch -v
@@ -431,14 +432,24 @@ $ git clone git@server-ip:path-to-project/
 сервера. Репозиторий на сервере это upstream, а у вас, в некотором смысле, форк.
 
 
---- Долгое клонирование
-Linux ядро клонируется очень долго, можно избежать и клонировать только последние коммиты:
+--- Клонирование ядра
+Linux ядро клонируется очень долго, можно этого избежать и клонировать только
+последние коммиты:
 $ git clone --depth 1 --branch master git@github.com:krekhovx/linux.git
 
 
 --- Права доступа файлов
-Git не сохраняет права доступа. Если на директории установлено 700, после
-клонирования все равно будет 755. Поэтому с правами можно не заморачиваться.
+Git хранит только содержимое файлов и структуру каталогов, а не их права доступа
+(за исключением исполняемого бита для файлов). Это означает, что при
+клонировании репозитория права доступа на директории и файлы будут установлены в
+соответствии с umask (маской пользователя) на системе, а не с теми, которые были
+в оригинальном репозитории.
+
+Если необходимо сохранить или изменить права доступа на файлы и директории после
+клонирования, это нужно будет сделать вручную. Git не предоставляет встроенных
+средств для сохранения и восстановления прав доступа на уровне каталогов,
+поэтому обычно это обрабатывается на уровне системы или с помощью дополнительных
+скриптов.
 
 
 --- Merge Request и Pull Request
@@ -467,7 +478,7 @@ GitLab: Code -> Review -> Build -> Test -> Plan
 Bitbucket: Code -> Review -> Build -> Test -> Plan
 
 
---- Github traffic
+--- Github Traffic
 В метрики трафика включены собственные посещения. Посетители - это общее
 количество посещений репозитория. Уникальные посетители - это количество
 отдельных пользователей, посетивших репозиторий, и они учитываются только один
@@ -475,8 +486,9 @@ Bitbucket: Code -> Review -> Build -> Test -> Plan
 Клонеры - это люди, которые клонировали или скачали копию кода с GitHub.
 
 
---- README, оформление, источники
-Отличный шаблон/стандарт: https://gist.github.com/PurpleBooth/109311bb0361f32d87a2
+--- README, оформление, источники, заметки
+Отличный шаблон/стандарт:
+https://gist.github.com/PurpleBooth/109311bb0361f32d87a2
 
 Общее:
 * Обзор продукта, содержит иллюстрации и гифки;
@@ -601,20 +613,20 @@ $ git commit --allow-empty -m "Initial empty commit"
 $ git push origin latest
 
 
---- git push origin master и git push --set-upstream master
+--- origin master и --set-upstream origin master
+$ git push origin master
+
 - Отправляет изменения из локальной ветки `master` в удаленный репозиторий
   `origin` в ветку `master`.
 - Используется для передачи изменений на удаленный сервер.
 
-$ git push origin master
+$ git push --set-upstream origin master
 
 - Устанавливает локальную ветку `master` для отслеживания удаленной ветки
   `master` в `origin`.
 - После выполнения этой команды можно будет просто использовать `git push` без
   указания удаленной ветки и репозитория, так как они будут заданы по
   умолчанию.
-
-$ git push --set-upstream origin master
 
 Для каждой ветки можно установить upstream. После этого, когда вы
 переключаетесь на любую из этих веток, `git push` будет автоматически знать,
@@ -626,7 +638,7 @@ $ git push --set-upstream origin master
 [user]
 	email = example@gmail.com
 	name = Ivan Ivanov
-	signingkey = 0C2C5915519CE4A0
+	signingkey = <Key ID>
 
 [commit]
 	gpgSign = true
@@ -635,9 +647,19 @@ $ git push --set-upstream origin master
 Settings -> GPG Keys
 
 В терминале:
-$ gpg --export --armor 0C2C5915519CE4A0
+$ gpg --export --armor <Key ID>
 
 Добавить новый ключ.
 
 Затем коммиты будут автоматически подписываться, а для тегов можно использовать:
 $ git tag -s <new-tag>
+
+
+--- Перезалить готовый репозиторий
+Например, понадобилось перелазить готовый GitHub репозиторий со всеми коммитами
+и тегами на новый Salsa адрес:
+$ git clone https://github.com/example/old.git
+$ cd old
+$ git remote set-url origin https://salsa.debian.org/example/new.git
+$ git push --set-upstream origin --all
+$ git push --set-upstream origin --tags
